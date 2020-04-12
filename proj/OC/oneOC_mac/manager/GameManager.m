@@ -72,8 +72,8 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
  
     if (self.socket == socket) {
-        [self.socket setDelegate:nil];
-        [self setSocket:nil];
+        self.socket.delegate = nil;
+        self.socket = nil;
     }
  
     // Notify Delegate

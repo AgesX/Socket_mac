@@ -386,7 +386,13 @@
 
 
 - (void)resetGame {
-  
+    for (NSArray * eles in self.board) {
+        for (NSView * v in eles){
+            [v removeFromSuperview];
+        }
+    }
+    self.board = nil;
+    self.matrix = nil;
     // Hide Replay Button
     [self.replayButton setHidden:YES];
  
