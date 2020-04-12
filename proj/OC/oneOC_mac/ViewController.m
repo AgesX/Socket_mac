@@ -69,11 +69,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+        
+        
+   
+    
+    
+    
 /*
+ 
     CGFloat x = self.view.frame.origin.x + self.view.frame.size.width * 0.5;
     CGFloat y = self.view.frame.origin.y + self.view.frame.size.height * 0.5;
  */
     self.boardView = [[BoardV alloc] initWithFrame: CGRectMake(300, 200 , 280, 240)];
+    
     [self.view addSubview: self.boardView];
     
     /*
