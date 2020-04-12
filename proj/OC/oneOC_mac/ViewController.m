@@ -71,17 +71,6 @@
     [super viewDidLoad];
    
         
-        
-   
-    
-    
-    
-/*
- 
-    CGFloat x = self.view.frame.origin.x + self.view.frame.size.width * 0.5;
-    CGFloat y = self.view.frame.origin.y + self.view.frame.size.height * 0.5;
- */
-    
     CGFloat x = (NSWidth(self.view.bounds) - 280) * 0.5;
     CGFloat y = (NSHeight(self.view.bounds) - 240) * 0.5;
     CGRect f = CGRectMake(x, y, 280, 240);
