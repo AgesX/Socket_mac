@@ -88,7 +88,7 @@
     NSError *error = nil;
     if ([self.socket acceptOnPort:0 error:&error]) {
         // Initialize Service
-        self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"_fourinarow._tcp." name:@"" port:[self.socket localPort]];
+        self.service = [[NSNetService alloc] initWithDomain:@"local." type:@"deng._tcp." name:@"" port:[self.socket localPort]];
  
         
 //  Because we didn't pass a name, it automatically uses the name of the device.

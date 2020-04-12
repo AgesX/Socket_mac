@@ -42,7 +42,7 @@
 
 
 // 数据，未更改
-@property (strong, nonatomic) NSArray<NSMutableArray * > * board;
+@property (strong, nonatomic) NSArray<NSArray * > * board;
 
 
 // 数据，已经更改
@@ -406,11 +406,11 @@
             [cell setAutoresizingMask:( NSViewWidthSizable | NSViewHeightSizable )];
             [self.boardView addSubview:cell];
             [column addObject:cell];
-            cell.layer.borderColor = NSColor.redColor.CGColor;
-            cell.layer.borderWidth = 2;
+         //   cell.layer.borderColor = NSColor.redColor.CGColor;
+          //  cell.layer.borderWidth = 2;
         }
  
-        [buffer addObject:column];
+        [buffer addObject: [column copy]];
     }
  
     // Initialize Board
