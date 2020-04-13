@@ -197,18 +197,18 @@
     NSString *message = nil;
  
     if (self.gameState == GameStateIWin) {
-        message = @"You have won the game.";
+        message = @"赢啦 ✌️ - You have won the game.";
  
     } else if (self.gameState == GameStateYourOpponentWin) {
-        message = @"Your opponent has won the game.";
+        message = @"你 gg 了，Your opponent has won the game.";
     }
  
     // Show Alert
     
     NSAlert * a = [[NSAlert alloc] init];
     a.messageText = @"We Have a Winner";
-    a.informativeText = @"赢啦 ✌️";
-    [a addButtonWithTitle: @"OK"];
+    a.informativeText = message;
+    [a addButtonWithTitle: @"知道了"];
     a.alertStyle = NSAlertStyleWarning;
 
     [a beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse returnCode) {
