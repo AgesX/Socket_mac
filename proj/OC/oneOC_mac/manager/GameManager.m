@@ -115,10 +115,8 @@
  */
 
 - (uint64_t)parseHeader:(NSData *)data {
-    NSLog(@"header 来了");
-    uint64_t headerLength = 0;
-    memcpy(&headerLength, [data bytes], sizeof(uint64_t));
- 
+    NSInteger headerLength = 0;
+    [data getBytes: &headerLength length:sizeof(uint64_t)];
     return headerLength;
 }
 
