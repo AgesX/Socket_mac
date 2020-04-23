@@ -126,6 +126,7 @@
 - (void)parseBody:(NSData *)data {
     NSLog(@"body 来了");
     NSError * error;
+    [NSKeyedUnarchiver setClass: PacketH.class forClassName:@"socketD.PacketH"];
     NSSet *classes = [NSSet setWithObjects: NSDictionary.class, PacketH.class, nil];
     PacketH *packet = [NSKeyedUnarchiver unarchivedObjectOfClasses: classes fromData: data error: &error];
     
