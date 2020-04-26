@@ -42,24 +42,21 @@
 
 
 
-- (void)viewDidAppear{
-    [super viewDidAppear];
+- (void)viewWillDisappear{
+    [super viewWillDisappear];
     
-    
+    [self cancel];
 }
 
 
 
 
-- (void)cancel:(id)sender {
+- (void)cancel{
     // Cancel Hosting Game
     [self.delegate controllerDidCancelHosting:self];
     
     // End Broadcast
     [self endBroadcast];
-    
-    // Dismiss View Controller
-     [self dismiss];
 }
 
 
