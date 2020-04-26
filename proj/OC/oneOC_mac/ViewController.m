@@ -460,20 +460,8 @@
 }
 
 
-
-
-
-
-
-
-
-
 - (IBAction)disconnectIt:(NSButton *)sender {
-    
-    
-    
     [self endGame];
-    
 }
 
 
