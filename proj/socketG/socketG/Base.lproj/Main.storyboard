@@ -848,11 +848,11 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="disconnectBtn" destination="7A9-J3-8yX" id="2yX-ig-Fi4"/>
-                        <outlet property="gameStateLabel" destination="OSd-nT-OzB" id="OS5-D2-cNm"/>
-                        <outlet property="hostBtn" destination="ivl-1o-HHC" id="cOH-wS-fIp"/>
-                        <outlet property="joinBtn" destination="4jt-8c-lWs" id="zhe-yz-BWG"/>
-                        <outlet property="replayButton" destination="MLb-7d-5WK" id="ZYB-ia-yif"/>
+                        <outlet property="disconnectBtn" destination="7A9-J3-8yX" id="lDa-XN-fYW"/>
+                        <outlet property="gameStateLabel" destination="OSd-nT-OzB" id="Akh-7A-mFj"/>
+                        <outlet property="hostBtn" destination="ivl-1o-HHC" id="TfJ-SK-SLR"/>
+                        <outlet property="joinBtn" destination="4jt-8c-lWs" id="ezV-XV-7tF"/>
+                        <outlet property="replayButton" destination="MLb-7d-5WK" id="IO0-AC-89G"/>
                     </connections>
                 </viewController>
                 <customObject id="GHI-gU-eBN" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

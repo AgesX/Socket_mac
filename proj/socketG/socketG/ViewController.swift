@@ -34,7 +34,62 @@ struct Matrix{
 
 
 class ViewController: NSViewController {
+    
+    var board = [[BoardCell]]()
 
+
+    var matrix = [[BoardCellType]]()
+    
+    var gameManager: GameManager?
+
+    
+    
+    
+    
+    @IBOutlet weak var hostBtn: NSButton!
+    
+    @IBOutlet weak var joinBtn: NSButton!
+    
+    
+    @IBOutlet weak var disconnectBtn: NSButton!
+    
+    
+    @IBOutlet weak var replayButton: NSButton!
+    
+    @IBOutlet weak var gameStateLabel: NSTextField!
+    
+    lazy var boardView: BoardV = { () -> BoardV in
+         let x = (view.bounds.width - 280) * 0.5
+         let y = (view.bounds.height - 240) * 0.5
+         let f = CGRect(x: x, y: y, width: 280, height: 240)
+         return BoardV(frame: f)
+    }()
+      
+    private var _gameState = GameState.myTurn
+    var gameState: GameState{
+        get{
+            return _gameState
+        }
+        set{
+            if newValue != _gameState{
+                _gameState = newValue
+                switch _gameState{
+                    case .myTurn:
+                        gameStateLabel.stringValue = "It is your turn."
+                    case .yourOpponentTurn:
+                        gameStateLabel.stringValue = "It is your opponent's turn."
+                    case .IWin:
+                        gameStateLabel.stringValue = "You have won."
+                    case .yourOpponentWin:
+                        gameStateLabel.stringValue = "Your opponent has won."
+                    default:
+                        gameStateLabel.stringValue = ""
+                }
+            }
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +106,50 @@ class ViewController: NSViewController {
 }
 
 
+extension ViewController: HostViewCtrlDelegate{
+    
+    
+    
+    
+    
+}
+
+
+
+
+extension ViewController: JoinListCtrlDelegate{
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+extension ViewController: GameManagerProxy{
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+extension ViewController: BoardVProxy{
+    
+    
+    
+    
+    
+}
+
+
 
 /*
 
@@ -58,28 +157,8 @@ class ViewController: NSViewController {
 
 
 
-@property (strong, nonatomic) GameManager * gameManager;
-
-
-@property (weak, nonatomic) IBOutlet NSButton *hostBtn;
-@property (weak, nonatomic) IBOutlet NSButton *joinBtn;
-@property (weak, nonatomic) IBOutlet NSButton *disconnectBtn;
-
-
-
 @property (nonatomic, strong) BoardV *boardView;
 
-@property (weak) IBOutlet NSTextField *gameStateLabel;
-
-@property (weak) IBOutlet NSButton *replayButton;
-
-
-// 数据，未更改
-@property (strong, nonatomic) NSArray<NSArray * > * board;
-
-
-// 数据，已经更改
-@property (strong, nonatomic) NSMutableArray<NSMutableArray *> * matrix;
 
 
 @property (assign, nonatomic) GameState gameState;
@@ -87,12 +166,6 @@ class ViewController: NSViewController {
 
 
 @end
-
-
-
-
-#define kMTMatrixWidth 7
-#define kMTMatrixHeight 6
 
 
 
@@ -700,53 +773,6 @@ class ViewController: NSViewController {
     // Update Game State
     self.gameState = GameStateYourOpponentTurn;
 }
-
-
-
-////
-
-
-
-
-- (void)setGameState: (GameState) gameState {
-    if (_gameState != gameState) {
-        _gameState = gameState;
- 
-        // Update View
-        [self updateView];
-    }
-}
-
-
-
-
-- (void)updateView {
-    // Update Game State Label
-    switch (self.gameState) {
-        case GameStateMyTurn: {
-            self.gameStateLabel.stringValue = @"It is your turn.";
-            break;
-        }
-        case GameStateYourOpponentTurn: {
-            self.gameStateLabel.stringValue = @"It is your opponent's turn.";
-            break;
-        }
-        case GameStateIWin: {
-            self.gameStateLabel.stringValue = @"You have won.";
-            break;
-        }
-        case GameStateYourOpponentWin: {
-            self.gameStateLabel.stringValue = @"Your opponent has won.";
-            break;
-        }
-        default: {
-            self.gameStateLabel.stringValue = @"";
-            break;
-        }
-    }
-}
-
-@end
 
 
 
