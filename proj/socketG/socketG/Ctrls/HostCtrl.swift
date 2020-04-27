@@ -44,7 +44,6 @@ class HostCtrl: NSViewController {
       func cancel(){
           delegate?.didCancelHosting(c: self)
           endBroadcast()
-          dismiss()
       }
 
 

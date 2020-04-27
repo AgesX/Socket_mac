@@ -83,9 +83,7 @@ class GameManager : NSObject{
                  }
                  
                  
-             } catch {
-                 print(error)
-             }
+             } catch {     print(error)    }
              
              
     }
@@ -152,15 +150,18 @@ extension GameManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
- 
-        if tag == 0{
+        switch tag {
+        case 0:
             let d = NSData(data: data)
             let bodyLength = parse(header: d)
             socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: 1)
-        } else if (tag == 1) {
+        case 1:
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: 0)
+        default:
+            ()
         }
+
     }
 
 
