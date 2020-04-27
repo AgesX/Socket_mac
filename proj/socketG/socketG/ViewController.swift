@@ -143,6 +143,24 @@ class ViewController: NSViewController {
       
     
     
+    // MARK: game relevant
+
+    func startGame(with socket: GCDAsyncSocket){
+        // Initialize Game Controller
+        gameManager = GameManager(socket: socket)
+        gameManager?.delegate = self
+     
+
+        // Hide/Show Buttons
+        boardView.isHidden = false
+        hostBtn.isHidden = true
+        
+        joinBtn.isHidden = true
+        disconnectBtn.isHidden = false
+        
+        gameStateLabel.isHidden = false
+    }
+    
     
     
     func endGame(){
@@ -389,13 +407,7 @@ class ViewController: NSViewController {
         
     }
     
-    
-    
 }
-
-
-
-
 
 
 
@@ -418,11 +430,12 @@ extension ViewController: HostViewCtrlDelegate{
 extension ViewController: JoinListCtrlDelegate{
     
     func didJoinGame(c controller: JoinCtrl, on socket: GCDAsyncSocket) {
-        
+        gameState = .yourOpponentTurn
+        startGame(with: socket)
     }
     
     func didCancelJoining(c controller: JoinCtrl) {
-        
+        print("\(#file), \(#function)")
     }
     
 }
@@ -430,19 +443,28 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 
-
 extension ViewController: GameManagerProxy{
     func didDisconnect(manager: GameManager) {
-        
+        endGame()
     }
     
-    
+
     func didStartNewGame(manager: GameManager) {
-        
+        resetGame()
+        gameState = .yourOpponentTurn
     }
+    
+
+    
     
     func didAddDisc(manager: GameManager, to column: UInt) {
-        
+        addDiscTo(column: column, with: .yours)
+        if hasPlayerWon(of: .you){
+            showWinner()
+        }
+        else{
+            gameState = .myTurn
+        }
     }
 }
 
@@ -712,73 +734,6 @@ extension ViewController: BoardVProxy{
 
 
  
-#pragma mark -
-#pragma mark Join Game View Controller Methods
-
-
-- (void)controller:(JoinCtrl *)controller didJoinGameOnSocket:(GCDAsyncSocket *)socket{
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    // Update Game State
-    self.gameState = GameStateYourOpponentTurn;
-    // Start Game with Socket
-    [self startGameWithSocket:socket];
-}
-
-
-
-
-- (void)controllerDidCancelJoining:(JoinCtrl *)controller{
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    
-}
-
-
-
-#pragma mark -
-#pragma mark Join Game View Controller Methods
-
-// 收到了，对方的操作
-- (void)manager:(GameManager *)manager didAddDiscToColumn:(NSInteger)column {
-    // Update Game
-    [self addDiscToColumn:column withType: BoardCellTypeYours];
- 
-    
-    
-     if([self hasPlayerOfTypeWon: PlayerTypeYou]) {
-            // Show Winner
-            [self showWinner];
-
-       }else{
-             // Update State
-             self.gameState = GameStateMyTurn;
-       }
-}
-
-
-
-
-
-
-- (void)managerDidDisconnect:(GameManager *) manager {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
- 
-    // End Game
-    [self endGame];
-}
-
-
-
-
-
-- (void)managerDidStartNewGame: (GameManager *) manager {
-    // Reset Game
-    [self resetGame];
- 
-    // Update Game State
-    self.gameState = GameStateYourOpponentTurn;
-}
-
 
 
 */
