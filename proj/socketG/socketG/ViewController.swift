@@ -113,6 +113,37 @@ class ViewController: NSViewController {
     
     
     
+    func showWinner(){
+        
+        switch gameState {
+        case .IWin, .yourOpponentWin:
+            replayButton.isHidden = false
+            var message = "你 gg 了，Your opponent has won the game."
+            if case GameState.IWin = gameState{
+                message = "赢啦 ✌️ - You have won the game."
+            }
+            
+            let alert = NSAlert()
+            alert.messageText = message
+            alert.informativeText = "We Have a Winner"
+            alert.addButton(withTitle: "知道了")
+            alert.alertStyle = .warning
+            if let w = view.window{
+                alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
+                    if returnCode == .alertFirstButtonReturn{
+                        print("知道了")
+                    }
+                }
+            }
+        default:
+            ()
+        }
+        
+    }
+      
+    
+    
+    
     
     func endGame(){
         
@@ -330,13 +361,11 @@ class ViewController: NSViewController {
     
     
     @IBAction func host(_ sender: NSButton) {
-        
-        
-        
+        let vc = HostCtrl(nibName: nil, bundle: nil)
+        vc.delegate = self
+        presentAsModalWindow(vc)
         
     }
-    
-    
     
     
     
@@ -363,6 +392,11 @@ class ViewController: NSViewController {
     
     
 }
+
+
+
+
+
 
 
 
@@ -414,277 +448,69 @@ extension ViewController: GameManagerProxy{
 
 
 
-
-
 extension ViewController: BoardVProxy{
     
     
     func click(event e: NSEvent) {
+        switch gameState {
+            case .myTurn:
         
+                let colume = column(for: e.locationInWindow)
+                addDiscTo(column: colume, with: .mine)
+                gameState = .yourOpponentTurn
+                
+                // Send Packet
+                gameManager?.addDiscTo(column: colume)
+                      
+                       
+                // Notify Players if Someone Has Won the Game
+                if hasPlayerWon(of: .me){
+                    showWinner()
+                }
+            case .yourOpponentWin, .IWin:
+                showWinner()
+            default:
+                //  .unknown, .yourOpponentTurn
+                let alert = NSAlert()
+                alert.messageText = "Warning 不啊"
+                alert.informativeText = "It's not your turn."
+                alert.addButton(withTitle: "OK")
+                alert.alertStyle = .warning
+                if let w = view.window{
+                    alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
+                        if returnCode == .alertFirstButtonReturn{
+                            print("知道了")
+                        }
+                    }
+                }
+            }
+            
     }
     
     
+    
+    func column(for point: CGPoint) -> UInt{
+        return UInt(point.x)/UInt(boardView.frame.size.width / Matrix.w);
+    }
+    
+
+
+    func addDiscTo(column c: UInt, with type: BoardCellType){
+        // Update Matrix
+      
+        matrix[c].append(type)
+        // Update Cells
+        let cell = board[c][matrix[c].count - 1]
+        cell.cellType = type
+        
+    }
 }
+
+     
+ 
 
 
 /*
-
-
-
-- (void)addDiscToColumn: (NSEvent *)event {
-    if (self.gameState >= GameStateIWin) {
-        //  GameStateYourOpponentWin,    GameStateIWin
-        
-        // Notify Players
-        [self showWinner];
- 
-    } else if (self.gameState != GameStateMyTurn) {
-        
-        //  GameStateYourOpponentTurn
-        
-        
-        // Show Alert
-        
-        NSAlert * a = [[NSAlert alloc] init];
-        a.messageText = @"It's not your turn.";
-        a.informativeText = @"Warning 不啊";
-        [a addButtonWithTitle: @"OK"];
-        a.alertStyle = NSAlertStyleWarning;
-
-        [a beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                NSLog(@"知道了");
-            }
-        }];
-        
- 
-    } else {
-        //  GameStateMyTurn
-        
-        
-        // 计算出了，哪一列
-        // 哪一行，怎么算
-        NSInteger column = [self columnForPoint: [event locationInWindow]];
-        
-        
-        // MD
-        [self addDiscToColumn:column withType: BoardCellTypeMine];
- // 这里是落子了，去更新状态
-        // Update Game State
-        // 自己操作处理了
-        self.gameState = GameStateYourOpponentTurn;
-        
-        
-        // 把消息，告知对方
-        
-        // Send Packet
-        [self.gameManager addDiscToColumn:column];
-        
-        // Notify Players if Someone Has Won the Game
-        
-        // Notify Players if Someone Has Won the Game
-        if ([self hasPlayerOfTypeWon: PlayerTypeMe]) {
-            // Show Winner
-            [self showWinner];
-        }
-    }
-}
-
-
-
-- (void)addDiscToColumn:(NSInteger)column withType:(BoardCellType)cellType {
-    // Update Matrix
-    NSMutableArray *columnArray = [self.matrix objectAtIndex:column];
-    [columnArray addObject: @(cellType)];
- 
-    // Update Cells
-    BoardCell *cell = [[self.board objectAtIndex:column] objectAtIndex: (columnArray.count - 1)];
-    cell.cellType = cellType;
-    
-}
-
-
-
-
-- (void)showWinner {
-    if (self.gameState < GameStateIWin){
-        return;
-    }
- 
-    // Show Replay Button
-    [self.replayButton setHidden:NO];
- 
-    NSString *message = nil;
- 
-    if (self.gameState == GameStateIWin) {
-        message = @"赢啦 ✌️ - You have won the game.";
- 
-    } else if (self.gameState == GameStateYourOpponentWin) {
-        message = @"你 gg 了，Your opponent has won the game.";
-    }
- 
-    // Show Alert
-    
-    NSAlert * a = [[NSAlert alloc] init];
-    a.messageText = @"We Have a Winner";
-    a.informativeText = message;
-    [a addButtonWithTitle: @"知道了"];
-    a.alertStyle = NSAlertStyleWarning;
-
-    [a beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse returnCode) {
-        if (returnCode == NSAlertFirstButtonReturn) {
-            NSLog(@"知道了");
-        }
-    }];
-    
-}
-
-
-
-
-- (NSInteger)columnForPoint:(CGPoint)point {
-    return floorf(point.x / floorf(self.boardView.frame.size.width / kMTMatrixWidth));
-}
-
-
-
-
-
-- (BOOL)hasPlayerOfTypeWon: (PlayerType) playerType {
-    BOOL _hasWon = NO;
-    NSInteger _counter = 0;
-    BoardCellType targetType = BoardCellTypeYours;
-    if (playerType == PlayerTypeMe){
-        targetType = BoardCellTypeMine;
-    }
- 
-    // Check Vertical Matches
-    // 竖着来
-    for (NSArray *line in self.board) {
-        _counter = 0;
- 
-        for (BoardCell *cell in line) {
-            _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-            _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-            if (_hasWon){
-                break;
-            }
-        }
- 
-        if (_hasWon){
-            break;
-        }
-    }
- 
-    if (!_hasWon) {
-        // Check Horizontal Matches
-        for (int i = 0; i < kMTMatrixHeight; i++) {
-            _counter = 0;
- 
-            for (int j = 0; j < kMTMatrixWidth; j++) {
-                BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:i];
-                _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-                if (_hasWon) break;
-            }
- 
-            if (_hasWon) break;
-        }
-    }
- 
-    if (!_hasWon) {
-        // Check Diagonal Matches
-        //  对角线
-        //  - First Pass
-        for (int i = 0; i < kMTMatrixWidth; i++) {
-            _counter = 0;
- 
-            // Forward
-            for (int j = i, row = 0; j < kMTMatrixWidth && row < kMTMatrixHeight; j++, row++) {
-                BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-                if (_hasWon) break;
-            }
- 
-            if (_hasWon) break;
- 
-            _counter = 0;
- 
-            // Backward
-            for (int j = i, row = 0; j >= 0 && row < kMTMatrixHeight; j--, row++) {
-                BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-                if (_hasWon) break;
-            }
- 
-            if (_hasWon) break;
-        }
-    }
- 
-    if (!_hasWon) {
-        // Check Diagonal Matches - Second Pass
-        for (int i = 0; i < kMTMatrixWidth; i++) {
-            _counter = 0;
- 
-            // Forward
-            for (int j = i, row = (kMTMatrixHeight - 1); j < kMTMatrixWidth && row >= 0; j++, row--) {
-                BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-                if (_hasWon) break;
-            }
- 
-            if (_hasWon) break;
- 
-            _counter = 0;
- 
-            // Backward
-            for (int j = i, row = (kMTMatrixHeight - 1); j >= 0 && row >= 0; j--, row--) {
-                BoardCell *cell = [(NSArray *)[self.board objectAtIndex:j] objectAtIndex:row];
-                _counter = (cell.cellType == targetType) ? _counter + 1 : 0;
-                _hasWon = (_counter > 3) ? YES : _hasWon;
- 
-                if (_hasWon) break;
-            }
- 
-            if (_hasWon) break;
-        }
-    }
- 
-    // Update Game State
-    if (_hasWon) {
-        self.gameState = GameStateYourOpponentWin;
-        if (playerType == PlayerTypeMe){
-            self.gameState = GameStateIWin;
-        }
-    }
- 
-    return _hasWon;
-}
-
-
-
-
-
-
-- (void)setRepresentedObject:(id)representedObject {
-    [super setRepresentedObject:representedObject];
-
-    // Update the view, if already loaded.
-}
-
-
-
-
-
-
 
 
 
@@ -768,41 +594,6 @@ extension ViewController: BoardVProxy{
     
     
 }
-
-
-
-
-- (IBAction)joinGame:(NSButton *)sender {
-    
-    JoinCtrl* vc = [[JoinCtrl alloc] initWithNibName:nil bundle:nil];
-    vc.delegate = self;
-    [self presentViewControllerAsModalWindow:vc];
-}
-
-
-- (IBAction)disconnectIt:(NSButton *)sender {
-    [self endGame];
-}
-
-
-
-- (IBAction)replayG:(NSButton *)sender {
-    
-    // Reset Game
-       [self resetGame];
-    
-       // Update Game State
-       self.gameState = GameStateMyTurn;
-    
-    
-      // 提示对手
-      // Notify Opponent of New Game
-       [self.gameManager startNewGame];
-    
-    
-    
-}
-
 
 
 
