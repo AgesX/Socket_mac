@@ -79,7 +79,7 @@ class ViewController: NSViewController {
 
           // Reset Game
           resetGame()
-
+          view.addSubview(boardView)
           // Configure Subviews
           boardView.isHidden = true
           replayButton.isHidden = true

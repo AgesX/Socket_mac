@@ -53,9 +53,7 @@ class HostCtrl: NSViewController {
       
       func startBroadcast(){
           // Initialize GCDAsyncSocket
-          self.socket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
-              
-
+          socket = GCDAsyncSocket(delegate: self, delegateQueue: DispatchQueue.main)
           do {
               try socket?.accept(onPort: 0)
               service = NetService(domain: "local.", type: "_deng._tcp.", name: "", port: Int32(socket?.localPort ?? 0))
