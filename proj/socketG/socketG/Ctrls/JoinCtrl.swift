@@ -37,7 +37,15 @@ class JoinCtrl: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
+        title = "加入者"
+
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // Start Browsing
+        startBrowsing()
+        NotificationCenter.default.addObserver(self, selector: #selector(didSelect(row:)), name: NSTableView.selectionDidChangeNotification, object: tableView)
+        
     }
     
     
@@ -45,6 +53,22 @@ class JoinCtrl: NSViewController {
     override func viewWillDisappear() {
         super.viewWillDisappear()
         cancel()
+    }
+    
+    
+
+    @objc
+    func didSelect(row noti: NSNotification){
+        if let tb = noti.object as? NSTableView{
+            let row = tb.selectedRow
+            
+            // Fetch Service
+            let service = services[row]
+            service.delegate = self;
+            // 点击，服务就 gg
+            service.resolve(withTimeout: 30.0)
+        }
+        
     }
     
     
@@ -223,5 +247,29 @@ extension JoinCtrl: GCDAsyncSocketDelegate{
 
 
 }
+
+
+
+
+extension JoinCtrl: NSTableViewDataSource{
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        return services.count
+    }
+    
+    
+}
+
+
+
+extension JoinCtrl: NSTableViewDelegate{
+    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        let cell = NSTextField()
+        cell.stringValue = services[row].name
+        return cell
+    }
+    
+    
+}
+
 
 
