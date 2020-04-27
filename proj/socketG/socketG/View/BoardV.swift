@@ -21,10 +21,51 @@ class BoardV: NSView {
     weak var delegate: BoardVProxy?
     
 
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-
-        // Drawing code here.
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        setup()
     }
+    
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+
+    func setup(){
+        
+        wantsLayer = true
+        needsDisplay = true
+        layer?.backgroundColor = NSColor.brown.cgColor
+        layer?.borderColor = NSColor.yellow.cgColor;
+        layer?.borderWidth = 2;
+    }
+
+
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setup()
+    }
+    
+    
+    override func mouseUp(with event: NSEvent) {
+        delegate?.click(event: event)
+    }
+    
+    
+    override var acceptsFirstResponder: Bool{
+        return true
+    }
+    
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return true
+    }
+    
+    override var isFlipped: Bool{
+        return true
+    }
+    
     
 }
