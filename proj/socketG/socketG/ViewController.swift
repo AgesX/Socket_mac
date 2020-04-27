@@ -62,9 +62,14 @@ class ViewController: NSViewController {
          let x = (view.bounds.width - 280) * 0.5
          let y = (view.bounds.height - 240) * 0.5
          let f = CGRect(x: x, y: y, width: 280, height: 240)
-         return BoardV(frame: f)
+         let v = BoardV(frame: f)
+         v.delegate = self
+         return v
     }()
       
+
+
+    
     private var _gameState = GameState.myTurn
     var gameState: GameState{
         get{
@@ -93,24 +98,283 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
+          // Reset Game
+          resetGame()
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
+          // Configure Subviews
+          boardView.isHidden = true
+          replayButton.isHidden = true
+          
+          disconnectBtn.isHidden = true
+          gameStateLabel.isHidden = true
+      }
+    
+    
+    
+    
+    
+    
+    func endGame(){
+        
+        // Clean Up
+        gameManager?.delegate = nil
+        gameManager = nil
+               
+        // Hide/Show Buttons
+        boardView.isHidden = true
+        hostBtn.isHidden = false
+        
+        joinBtn.isHidden = false
+        disconnectBtn.isHidden = true
+        gameStateLabel.isHidden = true
+        
+    }
+    
+
+
+    func hasPlayerWon(of type: PlayerType) -> Bool{
+        var hasWon = false
+        var counter = 0;
+        var targetType = BoardCellType.yours
+        if type == .me{
+            targetType = .mine
         }
+        // Check Vertical Matches
+        // 竖着来
+        Outer: for line in board{
+            counter = 0
+            for cell in line{
+                if cell.cellType == targetType{
+                    counter += 1
+                }
+                else{
+                    counter = 0
+                }
+                hasWon = (counter > 3)
+                if hasWon{
+                    break Outer
+                }
+            }
+        }
+        if hasWon == false{
+            Outer: for i in 0..<(Matrix.h){
+                counter = 0
+                for j in 0..<Matrix.w{
+                    let cell = board[j][i]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    if hasWon{
+                        break Outer
+                    }
+                }
+            }
+        }
+        if hasWon == false{
+            Outer: for i in 0..<Matrix.w{
+                // 算法有问题，所以需要正着来一遍，倒着来一遍
+                counter = 0
+                var j = i
+                var row = 0
+                while j < Matrix.w, row < Matrix.h {
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    if hasWon{
+                        break Outer
+                    }
+                    j += 1
+                    row += 1
+                }
+                
+                // Backward
+                
+                counter = 0
+                j = i
+                row = 0
+                while j > 0, row < Matrix.h{
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    if hasWon{
+                        break Outer
+                    }
+                    j -= 1
+                    row += 1
+                }
+            }
+            
+            
+        }
+        
+        if hasWon == false{
+           
+            // Check Diagonal Matches - Second Pass
+            Outer: for i in 0..<Matrix.w{
+                
+                counter = 0;
+     
+                // Forward
+                var j = i
+                var row = Matrix.h - 1
+                while j < Matrix.w, row >= 0 {
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    
+                    if hasWon{
+                        break Outer
+                    }
+                    
+                    j += 1
+                    row -= 1
+                }
+                 counter = 0;
+                
+     
+                // Backward
+                j = i
+                row = Matrix.h - 1
+                while j >= 0, row >= 0{
+                    let cell = board[j][row]
+                    if cell.cellType == targetType{
+                        counter += 1
+                    }
+                    else{
+                        counter = 0
+                    }
+                    hasWon = (counter > 3)
+                    
+                    if hasWon{
+                        break Outer
+                    }
+                    j -= 1
+                    row -= 1
+                }
+     
+            }
+        }
+     
+        // Update Game State
+        if hasWon{
+            gameState = .yourOpponentWin
+            if type == .me{
+                gameState = .IWin
+            }
+     
+        }
+        return hasWon
     }
 
+    
+    
+    
+    
+    
+    func resetGame(){
+         for eles in board{
+             eles.forEach { $0.removeFromSuperview() }
+         }
+         board = []
+         matrix = []
+         
+         // Hide Replay Button
+         replayButton.isHidden = true
+      
+         // Helpers
+         let size = boardView.frame.size
+         let cellWidth = size.width / Matrix.w
+         let cellHeight = size.height / Matrix.h
+         var buffer = [[BoardCell]]()
+         for i in 0..<Matrix.w{
+             var column = [BoardCell]()
+             for j in 0..<Matrix.h{
+                 let frame = CGRect(x: i * cellWidth, y: size.height - (j + 1) * cellHeight, width: cellWidth, height: cellHeight)
+                 let cell = BoardCell(frame: frame)
+                 cell.autoresizingMask = [.width, .height]
+                 boardView.addSubview(cell)
+                 column.append(cell)
+             }
+             buffer.append(column)
+         }
+         board = buffer
+         matrix = [[]]
+         
+         // 有 Matrix.w 个空盒子，可以装东西
+         let array = repeatElement([BoardCellType](), count: Matrix.w)
+         matrix.append(contentsOf: array)
+     }
 
+
+
+    
+    
+    
+    @IBAction func host(_ sender: NSButton) {
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    @IBAction func joinGame(_ sender: NSButton) {
+        let vc = JoinCtrl(nibName: nil, bundle: nil)
+        vc.delegate = self
+        presentAsModalWindow(vc)
+        
+    }
+    
+    
+    @IBAction func disconnectIt(_ sender: NSButton) {
+        endGame()
+    }
+    
+    
+    @IBAction func replayG(_ sender: NSButton) {
+        resetGame()
+        gameState = .myTurn
+        gameManager?.startNewGame()
+        
+    }
+    
+    
+    
 }
 
 
+
 extension ViewController: HostViewCtrlDelegate{
+    func didHostGame(c controller: HostCtrl, On socket: GCDAsyncSocket) {
+        
+    }
     
     
-    
-    
+    func didCancelHosting(c controller: HostCtrl) {
+        
+    }
     
 }
 
@@ -119,9 +383,13 @@ extension ViewController: HostViewCtrlDelegate{
 
 extension ViewController: JoinListCtrlDelegate{
     
+    func didJoinGame(c controller: JoinCtrl, on socket: GCDAsyncSocket) {
+        
+    }
     
-    
-    
+    func didCancelJoining(c controller: JoinCtrl) {
+        
+    }
     
 }
 
@@ -130,11 +398,18 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: GameManagerProxy{
+    func didDisconnect(manager: GameManager) {
+        
+    }
     
     
+    func didStartNewGame(manager: GameManager) {
+        
+    }
     
-    
-    
+    func didAddDisc(manager: GameManager, to column: UInt) {
+        
+    }
 }
 
 
@@ -144,76 +419,15 @@ extension ViewController: GameManagerProxy{
 extension ViewController: BoardVProxy{
     
     
-    
+    func click(event e: NSEvent) {
+        
+    }
     
     
 }
-
 
 
 /*
-
-@interface ViewController()<HostGameViewControllerDelegate, JoinGameViewControllerDelegate, GameManagerProxy, BoardVProxy>
-
-
-
-@property (nonatomic, strong) BoardV *boardView;
-
-
-
-@property (assign, nonatomic) GameState gameState;
-
-
-
-@end
-
-
-
-
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-   
-        
-    CGFloat x = (NSWidth(self.view.bounds) - 280) * 0.5;
-    CGFloat y = (NSHeight(self.view.bounds) - 240) * 0.5;
-    CGRect f = CGRectMake(x, y, 280, 240);
-    self.boardView = [[BoardV alloc] initWithFrame: f];
-    
-    [self.view addSubview: self.boardView];
-    
-    /*
-    self.boardView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints: @[
-        [self.boardView.centerXAnchor constraintEqualToAnchor: self.view.centerXAnchor],
-        [self.boardView.centerYAnchor constraintEqualToAnchor: self.view.centerYAnchor],
-        [self.boardView.widthAnchor constraintEqualToConstant: 280 ],
-        [self.boardView.heightAnchor constraintEqualToConstant: 240]]];
-   */
-    
-    // Setup View
-    [self setupView];
-}
-
-
-
-
-
-- (void)setupView {
-    // Reset Game
-    [self resetGame];
- 
-    // Configure Subviews
-    [self.boardView setHidden:YES];
-    [self.replayButton setHidden:YES];
-    [self.disconnectBtn setHidden:YES];
-    [self.gameStateLabel setHidden:YES];
-    
-    
-    self.boardView.delegate = self;
-}
 
 
 

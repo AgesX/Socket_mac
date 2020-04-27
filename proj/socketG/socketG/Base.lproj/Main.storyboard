@@ -704,7 +704,7 @@
         <!--View Controller-->
         <scene sceneID="94X-1z-FuE">
             <objects>
-                <viewController id="HjP-eg-r0N" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="HjP-eg-r0N" customClass="ViewController" customModule="socketG" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="H0O-UY-Uwi">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="500"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -719,7 +719,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="joinGame:" target="HjP-eg-r0N" id="50N-W0-0Y4"/>
+                                            <action selector="joinGame:" target="HjP-eg-r0N" id="r05-DN-py7"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ivl-1o-HHC">
@@ -729,7 +729,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="host:" target="HjP-eg-r0N" id="ECy-5h-0Xp"/>
+                                            <action selector="host:" target="HjP-eg-r0N" id="35j-q6-33f"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -755,7 +755,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="disconnectIt:" target="HjP-eg-r0N" id="67B-d0-dBG"/>
+                                            <action selector="disconnectIt:" target="HjP-eg-r0N" id="5D4-1d-T3r"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MLb-7d-5WK">
@@ -765,7 +765,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="replayG:" target="HjP-eg-r0N" id="CXa-a8-LOK"/>
+                                            <action selector="replayG:" target="HjP-eg-r0N" id="ooY-vd-JHn"/>
                                         </connections>
                                     </button>
                                 </subviews>

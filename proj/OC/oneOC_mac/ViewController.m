@@ -78,24 +78,6 @@
     
     [self.view addSubview: self.boardView];
     
-    /*
-    self.boardView.translatesAutoresizingMaskIntoConstraints = NO;
-    [NSLayoutConstraint activateConstraints: @[
-        [self.boardView.centerXAnchor constraintEqualToAnchor: self.view.centerXAnchor],
-        [self.boardView.centerYAnchor constraintEqualToAnchor: self.view.centerYAnchor],
-        [self.boardView.widthAnchor constraintEqualToConstant: 280 ],
-        [self.boardView.heightAnchor constraintEqualToConstant: 240]]];
-   */
-    
-    // Setup View
-    [self setupView];
-}
-
-
-
-
-
-- (void)setupView {
     // Reset Game
     [self resetGame];
  

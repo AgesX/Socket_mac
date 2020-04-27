@@ -16,6 +16,10 @@ protocol BoardVProxy: class{
 
 
 class BoardV: NSView {
+    
+    
+    weak var delegate: BoardVProxy?
+    
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
