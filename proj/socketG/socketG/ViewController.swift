@@ -8,15 +8,9 @@
 
 import Cocoa
 
-
-
-
 enum GameState: Int{
     case unknown = -1, myTurn, yourOpponentTurn, IWin, yourOpponentWin
 }
-
-
-
 
 enum PlayerType: Int{
     case me = 0, you
@@ -30,32 +24,19 @@ struct Matrix{
 }
 
 
-
-
-
 class ViewController: NSViewController {
     
     var board = [[BoardCell]]()
-
-
     var matrix = [[BoardCellType]]()
-    
     var gameManager: GameManager?
 
     
-    
-    
-    
     @IBOutlet weak var hostBtn: NSButton!
-    
     @IBOutlet weak var joinBtn: NSButton!
-    
-    
     @IBOutlet weak var disconnectBtn: NSButton!
     
     
     @IBOutlet weak var replayButton: NSButton!
-    
     @IBOutlet weak var gameStateLabel: NSTextField!
     
     lazy var boardView: BoardV = { () -> BoardV in
@@ -68,8 +49,6 @@ class ViewController: NSViewController {
     }()
       
 
-
-    
     private var _gameState = GameState.myTurn
     var gameState: GameState{
         get{
@@ -157,10 +136,8 @@ class ViewController: NSViewController {
         
         joinBtn.isHidden = true
         disconnectBtn.isHidden = false
-        
         gameStateLabel.isHidden = false
     }
-    
     
     
     func endGame(){
@@ -179,7 +156,6 @@ class ViewController: NSViewController {
         
     }
     
-
 
     func hasPlayerWon(of type: PlayerType) -> Bool{
         var hasWon = false
@@ -297,7 +273,7 @@ class ViewController: NSViewController {
                     j += 1
                     row -= 1
                 }
-                 counter = 0;
+                counter = 0
                 
      
                 // Backward
@@ -335,10 +311,6 @@ class ViewController: NSViewController {
     }
 
     
-    
-    
-    
-    
     func resetGame(){
          for eles in board{
              eles.forEach { $0.removeFromSuperview() }
@@ -374,9 +346,6 @@ class ViewController: NSViewController {
      }
 
 
-
-    
-    
     
     @IBAction func host(_ sender: NSButton) {
         let vc = HostCtrl(nibName: nil, bundle: nil)
@@ -411,15 +380,16 @@ class ViewController: NSViewController {
 
 
 
-
+// MARK: 15
 extension ViewController: HostViewCtrlDelegate{
     func didHostGame(c controller: HostCtrl, On socket: GCDAsyncSocket) {
-        
+        gameState = .myTurn
+        startGame(with: socket)
     }
     
     
     func didCancelHosting(c controller: HostCtrl) {
-        
+        print("\(#file), \(#function)")
     }
     
 }
@@ -476,15 +446,12 @@ extension ViewController: BoardVProxy{
     func click(event e: NSEvent) {
         switch gameState {
             case .myTurn:
-        
-                let colume = column(for: e.locationInWindow)
+                let p = boardView.convert( e.locationInWindow, from: nil )
+                let colume = column(for: NSPointToCGPoint(p))
                 addDiscTo(column: colume, with: .mine)
                 gameState = .yourOpponentTurn
-                
                 // Send Packet
                 gameManager?.addDiscTo(column: colume)
-                      
-                       
                 // Notify Players if Someone Has Won the Game
                 if hasPlayerWon(of: .me){
                     showWinner()
@@ -527,213 +494,3 @@ extension ViewController: BoardVProxy{
         
     }
 }
-
-     
- 
-
-
-/*
-
-
-
-- (void)startGameWithSocket:(GCDAsyncSocket *)socket {
-    // Initialize Game Controller
-    self.gameManager = [[GameManager alloc] initWithSocket:socket];
- 
-    // Configure Game Controller
-    self.gameManager.delegate = self;
- 
-    // Hide/Show Buttons
-    [self.boardView setHidden:NO];
-    [self.hostBtn setHidden:YES];
-    [self.joinBtn setHidden:YES];
-    [self.disconnectBtn setHidden:NO];
-    [self.gameStateLabel setHidden:NO];
-}
-
-
-
-
-
-- (void)resetGame {
-    for (NSArray * eles in self.board) {
-        for (NSView * v in eles){
-            [v removeFromSuperview];
-        }
-    }
-    self.board = nil;
-    self.matrix = nil;
-    // Hide Replay Button
-    [self.replayButton setHidden:YES];
- 
-    // Helpers
-    CGSize size = CGSizeMake(280, 240);
-    // self.boardView.frame.size;
-    CGFloat cellWidth = floorf(size.width / kMTMatrixWidth);
-    CGFloat cellHeight = floorf(size.height / kMTMatrixHeight);
-    NSMutableArray *buffer = [[NSMutableArray alloc] initWithCapacity:kMTMatrixWidth];
- 
-    for (int i = 0; i < kMTMatrixWidth; i++) {
-        NSMutableArray *column = [[NSMutableArray alloc] initWithCapacity: kMTMatrixHeight];
-        //  board 数组里面， 都是一列一列的纵向的数据
-        for (int j = 0; j < kMTMatrixHeight; j++) {
-            CGRect frame = CGRectMake(i * cellWidth, (size.height - ((j + 1) * cellHeight)), cellWidth, cellHeight);
-            BoardCell *cell = [[BoardCell alloc] initWithFrame:frame];
-            [cell setAutoresizingMask:( NSViewWidthSizable | NSViewHeightSizable )];
-            [self.boardView addSubview:cell];
-            [column addObject:cell];
-         //   cell.layer.borderColor = NSColor.redColor.CGColor;
-          //  cell.layer.borderWidth = 2;
-        }
- 
-        [buffer addObject: [column copy]];
-    }
- 
-    // Initialize Board
-    self.board = buffer.copy;
- 
-    // Initialize Matrix
-    self.matrix = [[NSMutableArray alloc] initWithCapacity:kMTMatrixWidth];
- 
-    for (int i = 0; i < kMTMatrixWidth; i++) {
-        NSMutableArray *column = [[NSMutableArray alloc] initWithCapacity:kMTMatrixHeight];
-        [self.matrix addObject:column];
-    }
-}
-
-
-
-
-
-
-
-
-- (IBAction)host:(NSButton *)sender {
-    
-    HostCtrl* vc = [[HostCtrl alloc] initWithNibName:nil bundle:nil];
-    vc.delegate = self;
-    [self presentViewControllerAsModalWindow:vc];
-    
-    
-}
-
-
-
-
-- (void)click:(NSEvent *)event{
-    
-    if (self.gameState >= GameStateIWin) {
-        //  GameStateYourOpponentWin,    GameStateIWin
-        
-        // Notify Players
-        [self showWinner];
- 
-    } else if (self.gameState != GameStateMyTurn) {
-        
-        //  GameStateYourOpponentTurn
-        
-        
-        // Show Alert
-        
-        NSAlert * a = [[NSAlert alloc] init];
-        a.messageText = @"It's not your turn.";
-        a.informativeText = @"Warning 不啊";
-        [a addButtonWithTitle: @"OK"];
-        a.alertStyle = NSAlertStyleWarning;
-
-        [a beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse returnCode) {
-            if (returnCode == NSAlertFirstButtonReturn) {
-                NSLog(@"知道了");
-            }
-        }];
-        
- 
-    } else {
-        //  GameStateMyTurn
-        
-        
-        // 计算出了，哪一列
-        // 哪一行，怎么算
-        
-        
-        NSPoint p = [self.boardView convertPoint: [event locationInWindow] fromView: nil];
-        
-        NSInteger column = [self columnForPoint: NSPointToCGPoint(p)];
-        
-        
-        // MD
-        [self addDiscToColumn:column withType: BoardCellTypeMine];
- // 这里是落子了，去更新状态
-        // Update Game State
-        // 自己操作处理了
-        self.gameState = GameStateYourOpponentTurn;
-        
-        
-        // 把消息，告知对方
-        
-        // Send Packet
-        [self.gameManager addDiscToColumn:column];
-        
-        // Notify Players if Someone Has Won the Game
-        
-        // Notify Players if Someone Has Won the Game
-        if ([self hasPlayerOfTypeWon: PlayerTypeMe]) {
-            // Show Winner
-            [self showWinner];
-        }
-    }
-}
-
-
-
-- (void)endGame {
-    // Clean Up
-    self.gameManager.delegate = nil;
-    self.gameManager = nil;
-    
-    // Hide/Show Buttons
-    [self.boardView setHidden:YES];
-    [self.hostBtn setHidden:NO];
-    [self.joinBtn setHidden:NO];
-    [self.disconnectBtn setHidden:YES];
-    [self.gameStateLabel setHidden:YES];
-   
-}
-
-
-
-
-#pragma mark -
-#pragma mark Host Game View Controller Methods
-
-
-
-- (void)controller:(HostCtrl *)controller didHostGameOnSocket:(GCDAsyncSocket *)socket{
-    
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    // Update Game State
-    self.gameState = GameStateMyTurn;
-    
-    // Start Game with Socket
-    [self startGameWithSocket:socket];
-    
-    // Test Connection
-    
-    NSLog(@"testConnection 来没");
-  //  [self.gameManager testConnection];
-}
-
-
-
-- (void)controllerDidCancelHosting:(HostCtrl *)controller{
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-    
-    
-}
-
-
- 
-
-
-*/
