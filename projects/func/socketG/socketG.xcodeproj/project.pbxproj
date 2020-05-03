@@ -15,8 +15,6 @@
 		2668118E2455AC8100617537 /* HostCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2668118C2455AC8100617537 /* HostCtrl.xib */; };
 		266811912455AC9200617537 /* JoinCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668118F2455AC9200617537 /* JoinCtrl.swift */; };
 		266811922455AC9200617537 /* JoinCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266811902455AC9200617537 /* JoinCtrl.xib */; };
-		266811952455C51A00617537 /* BoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811942455C51A00617537 /* BoardCell.swift */; };
-		266811972455C7D000617537 /* BoardV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811962455C7D000617537 /* BoardV.swift */; };
 		267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C050C2447387C00BAF530 /* AppDelegate.swift */; };
 		267C050F2447387C00BAF530 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C050E2447387C00BAF530 /* ViewController.swift */; };
 		267C05112447388100BAF530 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 267C05102447388100BAF530 /* Assets.xcassets */; };
@@ -53,8 +51,6 @@
 		2668118C2455AC8100617537 /* HostCtrl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostCtrl.xib; sourceTree = "<group>"; };
 		2668118F2455AC9200617537 /* JoinCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCtrl.swift; sourceTree = "<group>"; };
 		266811902455AC9200617537 /* JoinCtrl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinCtrl.xib; sourceTree = "<group>"; };
-		266811942455C51A00617537 /* BoardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardCell.swift; sourceTree = "<group>"; };
-		266811962455C7D000617537 /* BoardV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardV.swift; sourceTree = "<group>"; };
 		267C05092447387C00BAF530 /* socketG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C050C2447387C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		267C050E2447387C00BAF530 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -142,8 +138,6 @@
 		266811932455C50200617537 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				266811942455C51A00617537 /* BoardCell.swift */,
-				266811962455C7D000617537 /* BoardV.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -342,12 +336,10 @@
 				266811892455AADD00617537 /* GameManager.swift in Sources */,
 				266811872455AADD00617537 /* PacketH.swift in Sources */,
 				266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */,
-				266811952455C51A00617537 /* BoardCell.swift in Sources */,
 				267C050F2447387C00BAF530 /* ViewController.swift in Sources */,
 				2668118D2455AC8100617537 /* HostCtrl.swift in Sources */,
 				266811912455AC9200617537 /* JoinCtrl.swift in Sources */,
 				267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */,
-				266811972455C7D000617537 /* BoardV.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
