@@ -120,50 +120,11 @@ class ViewController: NSViewController {
     
     @IBAction func openFile(_ sender: NSButton){
         
-        /*
-        NSFileManager       *fm = [NSFileManager defaultManager];
-        NSURL               *downloadsURL;
-
-        downloadsURL = [fm URLForDirectory:NSDownloadsDirectory
-                           inDomain:NSUserDomainMask appropriateForURL:nil
-                           create:YES error:nil];
-        */
-        
-        
-        
-        
-        let path = "/Users/\(NSUserName())/Downloads/socketPlay/)"
-        print(path)
-        if let src = URL(string: path){
-            
-            if FileManager.default.fileExists(atPath: path) == false{
-                do {
-                    
-                    let url = try FileManager.default.url(for: FileManager.SearchPathDirectory.downloadsDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
-                    
-                    
-                    if FileManager.default.fileExists(atPath: path) == false{
-                        print(url.path)
-                        print(1)
-                    
-                        try FileManager.default.createDirectory(atPath: "/My/Custom/Path", withIntermediateDirectories: true, attributes: nil)
-                        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                        NSWorkspace.shared.open(url)
-                    }
-                    else{
-                        print(2___)
-                    }
-                } catch{
-                    print(2)
-                    print(error)
-                }
-            }
-            else{
-                print(3)
-            }
-          
+        if let url = URL.dir{
+            NSWorkspace.shared.open(url)
         }
         
+
     }
     
     
@@ -217,11 +178,12 @@ extension ViewController: TaskManagerProxy{
     }
     
 
-    func didReceive(packet data: Data, by manager: TaskManager) {
-        
+    func didReceive(packet data: Data, by manager: TaskManager){
         do {
-            let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String:Any]
-            print(dict)
+            let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
+            if let url = URL.src{
+                NSDictionary(dictionary: dict).write(toFile: url.absoluteString, atomically: true)
+            }
         } catch {
             print(error)
         }

@@ -43,3 +43,34 @@ extension NSViewController{
         }
     }
 }
+
+
+
+extension URL{
+    static var dir: URL?{
+        var pathURL: URL? = nil
+        let path = "/Users/\(NSUserName())/Downloads/socketPlay"
+        if let url = URL(string: path){
+            if FileManager.default.fileExists(atPath: path) == false{
+                do {
+                    try FileManager.default.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: nil)
+                } catch{
+                    print(error)
+                }
+            }
+            pathURL = url
+        }
+        return pathURL
+    }
+    
+    
+    
+    static var src: URL?{
+        var pathURL: URL? = nil
+        if let url = URL.dir{
+            pathURL = url.appendingPathComponent("prefer.plist")
+        }
+        return pathURL
+    }
+    
+}
