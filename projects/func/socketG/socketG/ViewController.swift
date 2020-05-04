@@ -119,14 +119,40 @@ class ViewController: NSViewController {
     
     
     @IBAction func openFile(_ sender: NSButton){
-        let path = "/Users/\(NSUserName())/Downloads/socketPlay/"
+        
+        /*
+        NSFileManager       *fm = [NSFileManager defaultManager];
+        NSURL               *downloadsURL;
+
+        downloadsURL = [fm URLForDirectory:NSDownloadsDirectory
+                           inDomain:NSUserDomainMask appropriateForURL:nil
+                           create:YES error:nil];
+        */
+        
+        
+        
+        
+        let path = "/Users/\(NSUserName())/Downloads/socketPlay/)"
         print(path)
-        if let url = URL(string: path){
+        if let src = URL(string: path){
             
             if FileManager.default.fileExists(atPath: path) == false{
                 do {
-                    print(1)
-                    try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+                    
+                    let url = try FileManager.default.url(for: FileManager.SearchPathDirectory.downloadsDirectory, in: FileManager.SearchPathDomainMask.userDomainMask, appropriateFor: nil, create: true)
+                    
+                    
+                    if FileManager.default.fileExists(atPath: path) == false{
+                        print(url.path)
+                        print(1)
+                    
+                        try FileManager.default.createDirectory(atPath: "/My/Custom/Path", withIntermediateDirectories: true, attributes: nil)
+                        try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+                        NSWorkspace.shared.open(url)
+                    }
+                    else{
+                        print(2___)
+                    }
                 } catch{
                     print(2)
                     print(error)
@@ -135,7 +161,7 @@ class ViewController: NSViewController {
             else{
                 print(3)
             }
-          //  NSWorkspace.shared.open(url)
+          
         }
         
     }
