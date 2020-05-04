@@ -37,11 +37,13 @@ class ViewController: NSViewController {
           // assign it to the button
           sendDataButton.attributedTitle = attrString
         
-        
-        
           sendDataButton.isHidden = true
             
           
+          let cut = "断开"
+          let attributeCut = [NSAttributedString.Key.foregroundColor: NSColor.red]
+          let attrStringCut = NSAttributedString(string: cut, attributes: attributeCut)
+          disconnectBtn.attributedTitle = attrStringCut
           disconnectBtn.isHidden = true
       }
     
