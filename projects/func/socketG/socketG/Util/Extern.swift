@@ -10,33 +10,24 @@ import AppKit
 
 
 
-
-extension Array {
-    public subscript(index: UInt) -> Element {
-        get{
-            return self[Int(index)]
+extension Data{
+    
+    static let start: Data = {() -> Data in
+        if let d = "start".data(using: String.Encoding.ascii){
+            return d
         }
-        set{
-            self[Int(index)] = newValue
+        fatalError("Data start")
+    }()
+    
+    static let dummy: Data = {() -> Data in
+        if let d = "dummy".data(using: String.Encoding.ascii){
+            return d
         }
-    }
+        fatalError("Data dummy")
+    }()
+    
 }
 
-
-
-public func / (left: CGFloat, right: Int) -> CGFloat {
-    return left/CGFloat(right)
-}
-
-
-public func * (left: CGFloat, right: Int) -> CGFloat {
-    return left * CGFloat(right)
-}
-
-
-public func * (left: Int, right: CGFloat) -> CGFloat {
-    return CGFloat(left) * right
-}
 
 
 

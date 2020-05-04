@@ -165,11 +165,9 @@ extension ViewController: TaskManagerProxy{
     }
     
 
-    
-    
-    func didAddDisc(manager: TaskManager, to column: UInt) {
+    func didSend(packet data: Data, by manager: TaskManager) {
         
-       
+        
     }
 }
 

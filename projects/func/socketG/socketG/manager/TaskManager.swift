@@ -10,12 +10,10 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
+    func didSend(packet data: Data, by manager: TaskManager)
     
-    
-    func didAddDisc(manager: TaskManager, to column: UInt)
     func didDisconnect(manager: TaskManager)
     func didStartNewTask(manager: TaskManager)
-
 }
 
 
@@ -42,14 +40,14 @@ class TaskManager : NSObject{
 
 
     func startNewTask(){
-        let packet = PacketH(info: ["1": 1], type: .startNewTask, action: .go)
+        let packet = Package(data: Data.start, type: .start)
         send(packet: packet)
     }
 
 
 
     
-    func send(packet p: PacketH){
+    func send(packet p: Package){
         
         
              // packet to buffer
@@ -83,7 +81,9 @@ class TaskManager : NSObject{
                  }
                  
                  
-             } catch {     print(error)    }
+             } catch {
+                 print(error)
+             }
              
              
     }
@@ -99,27 +99,21 @@ class TaskManager : NSObject{
     
     func parse(body data: Data){
         do {
-            NSKeyedUnarchiver.setClass(PacketH.self, forClassName: "socketD.PacketH")
-            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, PacketH.self], from: data) as! PacketH
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
+            let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
              
                print("Packet Data > \(packet.data)")
                print("Packet Type > \(packet.type)")
-               print("Packet Action > \(packet.action)")
-            
-               // 落子了
-               if packet.type == .didAddDisc{
-                    if let dic = packet.data as? [String: UInt], let column = dic["column"]{
-                        delegate?.didAddDisc(manager: self, to: column)
-                    }
+         
+               switch packet.type {
+                    case .start:
+                        delegate?.didStartNewTask(manager: self)
+                    case .sendData:
+                        delegate?.didSend(packet: packet.data, by: self)
+                    default:
+                        ()
                }
-               else if packet.type == .startNewTask{
-
-                     // 这里真的走了，  点击 replay 的时候
-                   // 新开一局
-                   // Notify Delegate
-                    delegate?.didStartNewTask(manager: self)
-               }
-            
             
         } catch {
             print(error)
@@ -135,8 +129,7 @@ class TaskManager : NSObject{
 
     func addDiscTo(column c: UInt){
         // Send Packet
-        let load = ["column": c]
-        let packet = PacketH(info: load, type: .didAddDisc, action: .go)
+        let packet = Package(data: Data.dummy, type: .sendData)
         send(packet: packet)
     }
 
@@ -150,18 +143,15 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
-        switch tag {
-        case 0:
+ 
+        if tag == 0{
             let d = NSData(data: data)
             let bodyLength = parse(header: d)
             socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: 1)
-        case 1:
+        } else if (tag == 1) {
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: 0)
-        default:
-            ()
         }
-
     }
 
 
@@ -182,3 +172,4 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
 }
+
