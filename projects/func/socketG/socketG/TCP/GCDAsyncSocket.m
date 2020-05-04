@@ -5129,7 +5129,7 @@ enum GCDAsyncSocketConfig{
 				// But we do NOT know:
 				// - how many encypted bytes are sitting in the sslContext
 				//
-				// So we play the regular game of using an upper bound instead.
+				// So we play the regular Task of using an upper bound instead.
 				
 				NSUInteger defaultReadLength = (1024 * 32);
 				

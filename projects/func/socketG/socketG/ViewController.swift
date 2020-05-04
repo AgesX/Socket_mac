@@ -12,7 +12,7 @@ import Cocoa
 class ViewController: NSViewController {
     
 
-    var gameManager: GameManager?
+    var taskAdmin: TaskManager?
 
     
     @IBOutlet weak var hostBtn: NSButton!
@@ -52,12 +52,12 @@ class ViewController: NSViewController {
       
     
     
-    // MARK: game relevant
+    // MARK: Task relevant
 
-    func startGame(with socket: GCDAsyncSocket){
-        // Initialize Game Controller
-        gameManager = GameManager(socket: socket)
-        gameManager?.delegate = self
+    func startTask(with socket: GCDAsyncSocket){
+        // Initialize Task Controller
+        taskAdmin = TaskManager(socket: socket)
+        taskAdmin?.delegate = self
      
 
         // Hide/Show Buttons
@@ -69,11 +69,11 @@ class ViewController: NSViewController {
     }
     
     
-    func endGame(){
+    func endTask(){
         
         // Clean Up
-        gameManager?.delegate = nil
-        gameManager = nil
+        taskAdmin?.delegate = nil
+        taskAdmin = nil
                
         // Hide/Show Buttons
         sendDataButton.isHidden = true
@@ -96,7 +96,7 @@ class ViewController: NSViewController {
     
     
     
-    @IBAction func joinGame(_ sender: NSButton) {
+    @IBAction func joinTask(_ sender: NSButton) {
         let vc = JoinCtrl(nibName: nil, bundle: nil)
         vc.delegate = self
         presentAsModalWindow(vc)
@@ -105,7 +105,7 @@ class ViewController: NSViewController {
     
     
     @IBAction func disconnectIt(_ sender: NSButton) {
-        endGame()
+        endTask()
     }
     
     
@@ -121,9 +121,9 @@ class ViewController: NSViewController {
 
 // MARK: 15
 extension ViewController: HostViewCtrlDelegate{
-    func didHostGame(c controller: HostCtrl, On socket: GCDAsyncSocket) {
+    func didHostTask(c controller: HostCtrl, On socket: GCDAsyncSocket) {
        
-        startGame(with: socket)
+        startTask(with: socket)
     }
     
     
@@ -138,9 +138,9 @@ extension ViewController: HostViewCtrlDelegate{
 
 extension ViewController: JoinListCtrlDelegate{
     
-    func didJoinGame(c controller: JoinCtrl, on socket: GCDAsyncSocket) {
+    func didJoinTask(c controller: JoinCtrl, on socket: GCDAsyncSocket) {
    
-        startGame(with: socket)
+        startTask(with: socket)
     }
     
     func didCancelJoining(c controller: JoinCtrl) {
@@ -152,20 +152,20 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 
-extension ViewController: GameManagerProxy{
-    func didDisconnect(manager: GameManager) {
-        endGame()
+extension ViewController: TaskManagerProxy{
+    func didDisconnect(manager: TaskManager) {
+        endTask()
     }
     
 
-    func didStartNewGame(manager: GameManager) {
+    func didStartNewTask(manager: TaskManager) {
       
     }
     
 
     
     
-    func didAddDisc(manager: GameManager, to column: UInt) {
+    func didAddDisc(manager: TaskManager, to column: UInt) {
         
        
     }

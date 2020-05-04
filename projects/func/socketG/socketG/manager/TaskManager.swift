@@ -1,5 +1,5 @@
 //
-//  GameManager.swift
+//  TaskManager.swift
 //  socketD
 //
 //  Created by Jz D on 2020/4/16.
@@ -9,12 +9,12 @@
 import Foundation
 
 
-protocol GameManagerProxy: class{
+protocol TaskManagerProxy: class{
     
     
-    func didAddDisc(manager: GameManager, to column: UInt)
-    func didDisconnect(manager: GameManager)
-    func didStartNewGame(manager: GameManager)
+    func didAddDisc(manager: TaskManager, to column: UInt)
+    func didDisconnect(manager: TaskManager)
+    func didStartNewTask(manager: TaskManager)
 
 }
 
@@ -25,10 +25,10 @@ struct Tag {
 }
 
 
-class GameManager : NSObject{
+class TaskManager : NSObject{
     
 
-    weak var delegate: GameManagerProxy?
+    weak var delegate: TaskManagerProxy?
 
     var socket: GCDAsyncSocket
     
@@ -41,8 +41,8 @@ class GameManager : NSObject{
     }
 
 
-    func startNewGame(){
-        let packet = PacketH(info: ["1": 1], type: .startNewGame, action: .go)
+    func startNewTask(){
+        let packet = PacketH(info: ["1": 1], type: .startNewTask, action: .go)
         send(packet: packet)
     }
 
@@ -112,12 +112,12 @@ class GameManager : NSObject{
                         delegate?.didAddDisc(manager: self, to: column)
                     }
                }
-               else if packet.type == .startNewGame{
+               else if packet.type == .startNewTask{
 
                      // 这里真的走了，  点击 replay 的时候
                    // 新开一局
                    // Notify Delegate
-                    delegate?.didStartNewGame(manager: self)
+                    delegate?.didStartNewTask(manager: self)
                }
             
             
@@ -146,7 +146,7 @@ class GameManager : NSObject{
 
 
 
-extension GameManager: GCDAsyncSocketDelegate{
+extension TaskManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {

@@ -11,7 +11,7 @@ import Cocoa
 
 
 protocol HostViewCtrlDelegate: class{
-    func didHostGame(c controller: HostCtrl, On socket: GCDAsyncSocket)
+    func didHostTask(c controller: HostCtrl, On socket: GCDAsyncSocket)
     func didCancelHosting(c controller: HostCtrl)
 }
 
@@ -102,7 +102,7 @@ extension HostCtrl: GCDAsyncSocketDelegate{
 
         
         print("Accepted New Socket from \(sock.connectedHost): \(sock.connectedPort)")
-        delegate?.didHostGame(c: self, On: newSocket)
+        delegate?.didHostTask(c: self, On: newSocket)
         endBroadcast()
         dismiss()
     }

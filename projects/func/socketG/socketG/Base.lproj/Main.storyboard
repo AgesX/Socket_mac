@@ -713,8 +713,8 @@
                                 <rect key="frame" x="225" y="100" width="150" height="300"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ivl-1o-HHC">
-                                        <rect key="frame" x="17" y="218" width="117" height="86"/>
-                                        <buttonCell key="cell" type="push" title="Host a game" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xFL-GK-xeD">
+                                        <rect key="frame" x="26" y="218" width="98" height="86"/>
+                                        <buttonCell key="cell" type="push" title="Host task" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="xFL-GK-xeD">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -723,13 +723,13 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4jt-8c-lWs">
-                                        <rect key="frame" x="19" y="143" width="113" height="86"/>
-                                        <buttonCell key="cell" type="push" title="Join a game" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X3D-QY-W6O">
+                                        <rect key="frame" x="28" y="143" width="95" height="86"/>
+                                        <buttonCell key="cell" type="push" title="Join task" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="X3D-QY-W6O">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                         <connections>
-                                            <action selector="joinGame:" target="HjP-eg-r0N" id="r05-DN-py7"/>
+                                            <action selector="joinTask:" target="HjP-eg-r0N" id="r05-DN-py7"/>
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MLb-7d-5WK">

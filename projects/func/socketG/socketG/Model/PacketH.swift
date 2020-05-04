@@ -10,7 +10,7 @@ import Foundation
 
 
 enum PacketType: Int{
-    case unknown = -1, didAddDisc, startNewGame
+    case unknown = -1, didAddDisc, startNewTask
 }
 
 
