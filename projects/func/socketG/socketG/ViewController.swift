@@ -114,6 +114,26 @@ class ViewController: NSViewController {
     
     
     @IBAction func sendData(_ sender: NSButton) {
+        if let url = URL.src{
+            
+            if FileManager.default.fileExists(atPath: url.absoluteString), let data = NSData(contentsOfFile: url.absoluteString){
+                taskAdmin?.send(packet: Data(referencing: data))
+           }
+           else{
+                let alert = NSAlert()
+                alert.messageText = "当前无资源文件"
+                alert.informativeText = "请先收一个资源文件"
+                alert.addButton(withTitle: "嗯嗯")
+                alert.alertStyle = .warning
+                if let w = view.window{
+                    alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
+                        if returnCode == .alertFirstButtonReturn{
+                            print("ok")
+                        }
+                    }
+                }
+           }
+        }
         
     }
     
@@ -121,7 +141,7 @@ class ViewController: NSViewController {
     @IBAction func openFile(_ sender: NSButton){
         
         if let url = URL.dir{
-            NSWorkspace.shared.open(url)
+            NSWorkspace.shared.openFile(url.absoluteString)
         }
         
 
@@ -182,6 +202,9 @@ extension ViewController: TaskManagerProxy{
         do {
             let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
             if let url = URL.src{
+                if FileManager.default.fileExists(atPath: url.absoluteString){
+                    try FileManager.default.removeItem(atPath: url.absoluteString)
+                }
                 NSDictionary(dictionary: dict).write(toFile: url.absoluteString, atomically: true)
             }
         } catch {

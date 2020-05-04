@@ -41,14 +41,13 @@ class TaskManager : NSObject{
 
     func startNewTask(){
         let packet = Package(data: Data.start, type: .start)
-        send(packet: packet)
+        send(with: packet)
     }
 
 
 
-    
-    func send(packet p: Package){
-        
+    fileprivate
+    func send(with packet: Package){
         
              // packet to buffer
              // 包，到 缓冲
@@ -56,7 +55,7 @@ class TaskManager : NSObject{
              // Encode Packet Data
 
              do {
-                 let encoded = try NSKeyedArchiver.archivedData(withRootObject: p, requiringSecureCoding: false)
+                 let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
                  
                  // Initialize Buffer
                  let buffer = NSMutableData()
@@ -122,10 +121,10 @@ class TaskManager : NSObject{
         
     }
 
-    func addDiscTo(column c: UInt){
+    func send(packet data: Data){
         // Send Packet
-        let packet = Package(data: Data.dummy, type: .sendData)
-        send(packet: packet)
+        let packet = Package(data: data, type: .sendData)
+        send(with: packet)
     }
 
 
