@@ -710,7 +710,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ykC-zu-MBQ">
-                                <rect key="frame" x="225" y="100" width="150" height="300"/>
+                                <rect key="frame" x="375" y="100" width="150" height="300"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ivl-1o-HHC">
                                         <rect key="frame" x="26" y="218" width="98" height="86"/>
@@ -770,10 +770,64 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
+                            <stackView distribution="fillEqually" orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kpg-SQ-4WR">
+                                <rect key="frame" x="75" y="100" width="150" height="300"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yfl-Xh-uqQ">
+                                        <rect key="frame" x="26" y="218" width="98" height="86"/>
+                                        <buttonCell key="cell" type="push" title="Open File" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hyp-Zh-TG4">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="openFile:" target="HjP-eg-r0N" id="V9h-Tw-O2N"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bau-QJ-iuM">
+                                        <rect key="frame" x="28" y="143" width="95" height="86"/>
+                                        <buttonCell key="cell" type="push" title="Join task" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="buf-pL-WwF">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t4w-mi-pjk">
+                                        <rect key="frame" x="25" y="68" width="100" height="86"/>
+                                        <buttonCell key="cell" type="push" title="send data" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="e9f-7E-2qq">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o11-nD-oEW">
+                                        <rect key="frame" x="21" y="-7" width="109" height="86"/>
+                                        <buttonCell key="cell" type="push" title="Disconnect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="kDZ-rP-l0W">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="T0x-Ng-moH"/>
+                                    <constraint firstAttribute="height" constant="300" id="jV2-hs-kOl"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Kpg-SQ-4WR" firstAttribute="centerX" secondItem="H0O-UY-Uwi" secondAttribute="centerX" multiplier="0.5" id="7Bm-QK-yAl"/>
                             <constraint firstItem="ykC-zu-MBQ" firstAttribute="centerY" secondItem="H0O-UY-Uwi" secondAttribute="centerY" id="RPF-Ie-Z11"/>
-                            <constraint firstItem="ykC-zu-MBQ" firstAttribute="centerX" secondItem="H0O-UY-Uwi" secondAttribute="centerX" id="yJB-Mm-ffz"/>
+                            <constraint firstItem="Kpg-SQ-4WR" firstAttribute="centerY" secondItem="H0O-UY-Uwi" secondAttribute="centerY" id="oec-xR-1oC"/>
+                            <constraint firstItem="ykC-zu-MBQ" firstAttribute="centerX" secondItem="H0O-UY-Uwi" secondAttribute="centerX" multiplier="1.5" id="yJB-Mm-ffz"/>
                         </constraints>
                     </view>
                     <connections>

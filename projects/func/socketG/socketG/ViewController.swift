@@ -117,6 +117,32 @@ class ViewController: NSViewController {
         
     }
     
+    
+    @IBAction func openFile(_ sender: NSButton){
+        let path = "/Users/\(NSUserName())/Downloads/socketPlay/"
+        print(path)
+        if let url = URL(string: path){
+            
+            if FileManager.default.fileExists(atPath: path) == false{
+                do {
+                    print(1)
+                    try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
+                } catch{
+                    print(2)
+                    print(error)
+                }
+            }
+            else{
+                print(3)
+            }
+          //  NSWorkspace.shared.open(url)
+        }
+        
+    }
+    
+    
+    
+    
 }
 
 
