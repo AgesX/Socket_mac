@@ -165,8 +165,14 @@ extension ViewController: TaskManagerProxy{
     }
     
 
-    func didSend(packet data: Data, by manager: TaskManager) {
+    func didReceive(packet data: Data, by manager: TaskManager) {
         
+        do {
+            let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String:Any]
+            print(dict)
+        } catch {
+            print(error)
+        }
         
     }
 }

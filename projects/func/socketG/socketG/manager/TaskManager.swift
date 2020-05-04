@@ -10,7 +10,7 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
-    func didSend(packet data: Data, by manager: TaskManager)
+    func didReceive(packet data: Data, by manager: TaskManager)
     
     func didDisconnect(manager: TaskManager)
     func didStartNewTask(manager: TaskManager)
@@ -99,7 +99,8 @@ class TaskManager : NSObject{
     
     func parse(body data: Data){
         do {
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
+            //  NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
              
@@ -110,7 +111,7 @@ class TaskManager : NSObject{
                     case .start:
                         delegate?.didStartNewTask(manager: self)
                     case .sendData:
-                        delegate?.didSend(packet: packet.data, by: self)
+                        delegate?.didReceive(packet: packet.data, by: self)
                     default:
                         ()
                }
@@ -120,12 +121,6 @@ class TaskManager : NSObject{
         }
         
     }
-
-
-
-
- 
-    
 
     func addDiscTo(column c: UInt){
         // Send Packet
@@ -144,13 +139,18 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
  
-        if tag == 0{
+        switch tag {
+        case 0:
+            print(1)
             let d = NSData(data: data)
             let bodyLength = parse(header: d)
             socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: 1)
-        } else if (tag == 1) {
+        case 1:
+            print(2)
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: 0)
+        default:
+            ()
         }
     }
 
@@ -166,10 +166,5 @@ extension TaskManager: GCDAsyncSocketDelegate{
         // Notify Delegate
         delegate?.didDisconnect(manager: self)
     }
-
-
-
-
-
 }
 
