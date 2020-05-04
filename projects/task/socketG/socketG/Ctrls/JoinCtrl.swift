@@ -11,11 +11,7 @@ import Cocoa
 
 protocol JoinListCtrlDelegate: class{
 
-    
     func didJoinTask(c controller: JoinCtrl, on socket: GCDAsyncSocket)
-    
-    func didCancelJoining(c controller: JoinCtrl)
-
 }
 
 
@@ -73,7 +69,6 @@ class JoinCtrl: NSViewController {
     
     
       func cancel(){
-          delegate?.didCancelJoining(c: self)
           stopBrowsing()
       }
       

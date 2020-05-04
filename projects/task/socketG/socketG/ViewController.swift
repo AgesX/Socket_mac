@@ -119,7 +119,7 @@ class ViewController: NSViewController {
     @IBAction func sendData(_ sender: NSButton) {
         if let url = URL.src{
             
-            if FileManager.default.fileExists(atPath: url.absoluteString), let data = NSData(contentsOfFile: url.absoluteString){
+           if FileManager.default.fileExists(atPath: url.absoluteString), let data = NSData(contentsOfFile: url.absoluteString){
                 taskAdmin?.send(packet: Data(referencing: data))
            }
            else{
@@ -154,6 +154,7 @@ class ViewController: NSViewController {
     
     @IBAction func musicBroswer(_ sender: NSButton){
         let vc = MusicBroswer(nibName: nil, bundle: nil)
+        vc.delegate = self
         presentAsModalWindow(vc)
     }
     
@@ -167,11 +168,7 @@ extension ViewController: HostViewCtrlDelegate{
        
         startTask(with: socket)
     }
-    
-    
-    func didCancelHosting(c controller: HostCtrl) {
-        print("\(#file), \(#function)")
-    }
+
     
 }
 
@@ -184,11 +181,7 @@ extension ViewController: JoinListCtrlDelegate{
    
         startTask(with: socket)
     }
-    
-    func didCancelJoining(c controller: JoinCtrl) {
-        print("\(#file), \(#function)")
-    }
-    
+
 }
 
 
@@ -223,7 +216,13 @@ extension ViewController: TaskManagerProxy{
 
 
 
-extension ViewController{
+extension ViewController: MusicBroswerDelegate{
+    func didSend(data url: URL) {
+        
+        
+        
+        
+    }
     
     
 }

@@ -8,9 +8,15 @@
 
 import Cocoa
 
+
+protocol MusicBroswerDelegate: class{
+    func didSend(data url: URL)
+}
+
+
 class MusicBroswer: NSViewController {
     
-    
+    weak var delegate: MusicBroswerDelegate?
     
     @IBOutlet weak var table: NSTableView!
     
@@ -59,6 +65,12 @@ class MusicBroswer: NSViewController {
             return
         }
         let row = table.selectedRow
+        
+        
+        
+        
+        
+        ///
         let alert = NSAlert()
         alert.messageText = "选中即发送"
         alert.informativeText = "发送啦"

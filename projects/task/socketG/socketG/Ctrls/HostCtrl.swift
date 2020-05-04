@@ -12,7 +12,7 @@ import Cocoa
 
 protocol HostViewCtrlDelegate: class{
     func didHostTask(c controller: HostCtrl, On socket: GCDAsyncSocket)
-    func didCancelHosting(c controller: HostCtrl)
+    
 }
 
 
@@ -42,7 +42,6 @@ class HostCtrl: NSViewController {
       
       
       func cancel(){
-          delegate?.didCancelHosting(c: self)
           endBroadcast()
       }
 
