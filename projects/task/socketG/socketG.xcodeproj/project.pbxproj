@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2668117D2455AADD00617537 /* GCDAsyncSocket.m */; };
 		266811872455AADD00617537 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811802455AADD00617537 /* Package.swift */; };
-		266811882455AADD00617537 /* Extern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811822455AADD00617537 /* Extern.swift */; };
 		266811892455AADD00617537 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811842455AADD00617537 /* TaskManager.swift */; };
 		2668118D2455AC8100617537 /* HostCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668118B2455AC8100617537 /* HostCtrl.swift */; };
 		2668118E2455AC8100617537 /* HostCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2668118C2455AC8100617537 /* HostCtrl.xib */; };
@@ -21,6 +20,8 @@
 		267C05142447388100BAF530 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 267C05122447388100BAF530 /* Main.storyboard */; };
 		267C05202447388200BAF530 /* socketGTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C051F2447388200BAF530 /* socketGTests.swift */; };
 		267C052B2447388200BAF530 /* socketGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C052A2447388200BAF530 /* socketGUITests.swift */; };
+		269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E4F2460B26E009D3D6F /* UI_Extern.swift */; };
+		269A1E522460B26E009D3D6F /* DataExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E502460B26E009D3D6F /* DataExtern.swift */; };
 		26CC8515246052B800D50827 /* MusicBroswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8513246052B800D50827 /* MusicBroswer.swift */; };
 		26CC8516246052B800D50827 /* MusicBroswer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CC8514246052B800D50827 /* MusicBroswer.xib */; };
 /* End PBXBuildFile section */
@@ -46,7 +47,6 @@
 		2668117D2455AADD00617537 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		2668117E2455AADD00617537 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		266811802455AADD00617537 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		266811822455AADD00617537 /* Extern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extern.swift; sourceTree = "<group>"; };
 		266811842455AADD00617537 /* TaskManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
 		266811852455AADD00617537 /* ObjC_Bridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjC_Bridge.h; sourceTree = "<group>"; };
 		2668118B2455AC8100617537 /* HostCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostCtrl.swift; sourceTree = "<group>"; };
@@ -66,6 +66,8 @@
 		267C05262447388200BAF530 /* socketGUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = socketGUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C052A2447388200BAF530 /* socketGUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = socketGUITests.swift; sourceTree = "<group>"; };
 		267C052C2447388200BAF530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		269A1E4F2460B26E009D3D6F /* UI_Extern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Extern.swift; sourceTree = "<group>"; };
+		269A1E502460B26E009D3D6F /* DataExtern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtern.swift; sourceTree = "<group>"; };
 		26CC8513246052B800D50827 /* MusicBroswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicBroswer.swift; sourceTree = "<group>"; };
 		26CC8514246052B800D50827 /* MusicBroswer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicBroswer.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +117,8 @@
 		266811812455AADD00617537 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				266811822455AADD00617537 /* Extern.swift */,
+				269A1E502460B26E009D3D6F /* DataExtern.swift */,
+				269A1E4F2460B26E009D3D6F /* UI_Extern.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -339,7 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				266811882455AADD00617537 /* Extern.swift in Sources */,
+				269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */,
 				266811892455AADD00617537 /* TaskManager.swift in Sources */,
 				266811872455AADD00617537 /* Package.swift in Sources */,
 				266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */,
@@ -348,6 +351,7 @@
 				2668118D2455AC8100617537 /* HostCtrl.swift in Sources */,
 				266811912455AC9200617537 /* JoinCtrl.swift in Sources */,
 				267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */,
+				269A1E522460B26E009D3D6F /* DataExtern.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

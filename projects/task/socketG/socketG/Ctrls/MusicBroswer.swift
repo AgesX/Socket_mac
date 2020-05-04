@@ -26,7 +26,7 @@ class MusicBroswer: NSViewController {
 
         table.delegate = self
         table.dataSource = self
-
+        NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow(_:)), name: NSTableView.selectionDidChangeNotification, object: table)
         
     }
     
@@ -51,6 +51,31 @@ class MusicBroswer: NSViewController {
         }
     }
     
+    
+    
+    @objc
+    func didSelectRow(_ noti: Notification){
+        guard let table = noti.object as? NSTableView else {
+            return
+        }
+        let row = table.selectedRow
+        let alert = NSAlert()
+        alert.messageText = "选中即发送"
+        alert.informativeText = "发送啦"
+        alert.addButton(withTitle: "嗯嗯")
+        alert.alertStyle = .warning
+        if let w = view.window{
+            alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
+                if returnCode == .alertFirstButtonReturn{
+                    print("ok")
+                }
+            }
+        }
+        
+    }
+    
+    
+    
 }
 
 
@@ -69,19 +94,20 @@ extension MusicBroswer: NSTableViewDataSource{
 
 extension MusicBroswer: NSTableViewDelegate{
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let cell = NSTextField()
+       
 
-        let attributeCut = [NSAttributedString.Key.foregroundColor: NSColor.red, NSAttributedString.Key.font: NSFont.systemFont(ofSize: 25)]
-        let attrStringCut = NSAttributedString(string: files[row].lastPathComponent, attributes: attributeCut)
-        cell.attributedStringValue = attrStringCut
+        let cell = tableView.makeView(withIdentifier: .contentFile, owner: self) as! NSTableCellView
+        let attribute = [NSAttributedString.Key.foregroundColor: NSColor.red, NSAttributedString.Key.font: NSFont.systemFont(ofSize: 25)]
+        let attrString = NSAttributedString(string: files[row].lastPathComponent, attributes: attribute)
         
+        cell.textField?.attributedStringValue = attrString
         return cell
     }
     
     
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 32
+        return 40
     }
     
     

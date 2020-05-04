@@ -21,7 +21,7 @@ class ViewController: NSViewController {
     
     
     @IBOutlet weak var sendDataButton: NSButton!
-    
+    @IBOutlet weak var broswerBtn: NSButton!
     
 
 
@@ -45,6 +45,7 @@ class ViewController: NSViewController {
           let attrStringCut = NSAttributedString(string: cut, attributes: attributeCut)
           disconnectBtn.attributedTitle = attrStringCut
           disconnectBtn.isHidden = true
+          broswerBtn.isHidden = true
       }
     
     
@@ -68,6 +69,8 @@ class ViewController: NSViewController {
         
         joinBtn.isHidden = true
         disconnectBtn.isHidden = false
+        
+        broswerBtn.isHidden = false
     }
     
     

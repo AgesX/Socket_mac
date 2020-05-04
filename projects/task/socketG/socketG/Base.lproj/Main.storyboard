@@ -816,6 +816,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="broswerBtn" destination="bau-QJ-iuM" id="hYI-ad-WNe"/>
                         <outlet property="disconnectBtn" destination="7A9-J3-8yX" id="lDa-XN-fYW"/>
                         <outlet property="hostBtn" destination="ivl-1o-HHC" id="TfJ-SK-SLR"/>
                         <outlet property="joinBtn" destination="4jt-8c-lWs" id="ezV-XV-7tF"/>

@@ -30,22 +30,6 @@ extension Data{
 
 
 
-
-extension NSViewController{
-    
-    func dismiss(){
-        // Dismiss View Controller
-        if let p = presentingViewController{
-            p.dismiss(self)
-        }
-        else{
-            view.window?.close()
-        }
-    }
-}
-
-
-
 extension URL{
     static var dir: URL?{
         var pathURL: URL? = nil
@@ -72,5 +56,15 @@ extension URL{
         }
         return pathURL
     }
+    
+}
+
+
+
+
+extension NSUserInterfaceItemIdentifier{
+
+    static let contentFile = NSUserInterfaceItemIdentifier(rawValue: "content_file")
+    
     
 }
