@@ -28,7 +28,7 @@ class HostCtrl: NSViewController {
     
     override func viewDidLoad() {
           super.viewDidLoad()
-          title = "主机";
+          title = "主机"
           
           startBroadcast()
       }

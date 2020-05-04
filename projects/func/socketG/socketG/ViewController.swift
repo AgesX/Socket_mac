@@ -28,7 +28,7 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+          
           
           // Configure Subviews
           let sendData = "send data"
@@ -149,6 +149,10 @@ class ViewController: NSViewController {
     
     
     
+    @IBAction func musicBroswer(_ sender: NSButton){
+        let vc = MusicBroswer(nibName: nil, bundle: nil)
+        presentAsModalWindow(vc)
+    }
     
 }
 
