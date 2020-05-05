@@ -147,6 +147,7 @@ class ViewController: NSViewController {
         let vc = MusicBroswer(nibName: nil, bundle: nil)
         vc.delegate = self
         presentAsModalWindow(vc)
+        taskAdmin?.send(message: "传输结束")
     }
     
 }
@@ -179,9 +180,10 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didReceive(_ name: String, buffer data: Data){
+    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool) {
         
     }
+    
     
     func didDisconnect(){
         endTask()

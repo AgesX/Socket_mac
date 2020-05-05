@@ -30,6 +30,12 @@ enum Tag: Int{
 }
 
 
+struct HeaderInfo {
+    let tag: UInt
+    let headerLength: UInt
+}
+
+
 class TaskManager : NSObject{
     
 
@@ -167,7 +173,6 @@ class TaskManager : NSObject{
     
     
     
-    fileprivate
     func send(message txt: String){
         
              // packet to buffer
@@ -183,21 +188,31 @@ class TaskManager : NSObject{
                  let buffer = NSMutableData()
              
                 // buffer = header + packet
-                
+                 
                 // Fill Buffer
+                 let size = MemoryLayout<UInt>.size
                  var headerLength = encoded.count
-                
-                 buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+                 buffer.append(&headerLength, length: size)
                  encoded.withUnsafeBytes { (p) in
-                     let bufferPointer = p.bindMemory(to: UInt8.self)
+                     let bufferPointer = p.bindMemory(to: UInt.self)
                      if let address = bufferPointer.baseAddress{
-                         buffer.append(address, length: headerLength)
+                         buffer.append(address, length: size)
                      }
                  }
-                 
+                 var val = Tag.hTalk.rawValue
+                 buffer.append(&val, length: size)
+                 withUnsafeBytes(of: val, { (p) in
+                     let bufferPointer = p.bindMemory(to: UInt.self)
+                     if let address = bufferPointer.baseAddress{
+                        buffer.append(address, length: size)
+                     }
+                 })
+
+                
 
                 // Write Buffer
                  if let d = buffer.copy() as? Data{
+                    parse(header: d)
                     socket.write(d, withTimeout: -1.0, tag: Tag.hTalk.rawValue)
                  }
                  
@@ -210,9 +225,15 @@ class TaskManager : NSObject{
     }
 
     
-    func parse(header data: Data) -> UInt{
+    //  HeaderInfo
+    func parse(header data: Data) -> ( UInt){
         var headerLength: UInt = 0
-        NSData(data: data).getBytes(&headerLength, length: MemoryLayout<UInt>.size)
+        var tag: UInt = 0
+        let size = MemoryLayout<UInt>.size
+        NSData(data: data).getBytes(&headerLength, range: NSRange(location: 0, length: size))
+        NSData(data: data).getBytes(&tag, range: NSRange(location: size * 2, length: size))
+        print("我去")
+        print(tag, headerLength)
         return headerLength
     }
 
@@ -278,8 +299,7 @@ extension TaskManager: GCDAsyncSocketDelegate{
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         switch Tag(rawValue: tag) {
         case .head:
-            let bodyLength = parse(header: data)
-            socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: Tag.body.rawValue)
+            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.body.rawValue)
         case .body:
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
