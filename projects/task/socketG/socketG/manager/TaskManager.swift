@@ -22,11 +22,8 @@ protocol TaskManagerProxy: class{
 enum Tag: Int{
     case head = 0
     case body = 1
-    case headStream = 2
-    
-    case bodyStream = 3
-    case hTalk = 4
-    case bTalk = 5
+    case bodyStream = 2
+    case bTalk = 3
 }
 
 
@@ -100,7 +97,7 @@ class TaskManager : NSObject{
                 
                // Write Buffer
                 if let d = buffer.copy() as? Data{
-                    socket.write(d, withTimeout: -1.0, tag: Tag.headStream.rawValue)
+                    socket.write(d, withTimeout: -1.0, tag: Tag.bodyStream.rawValue)
                 }
             
         }catch{
@@ -191,17 +188,16 @@ class TaskManager : NSObject{
                  
                 // Fill Buffer
                  let size = MemoryLayout<UInt>.size
-                 var headerLength = encoded.count
-                 buffer.append(&headerLength, length: size)
-                 encoded.withUnsafeBytes { (p) in
+                 let big = 1000
+                 let small = 10
+                 withUnsafeBytes(of: big, { (p) in
                      let bufferPointer = p.bindMemory(to: UInt.self)
                      if let address = bufferPointer.baseAddress{
-                         buffer.append(address, length: size)
+                        buffer.append(address, length: size)
                      }
-                 }
-                 var val = Tag.hTalk.rawValue
-                 buffer.append(&val, length: size)
-                 withUnsafeBytes(of: val, { (p) in
+                 })
+                 
+                 withUnsafeBytes(of: small, { (p) in
                      let bufferPointer = p.bindMemory(to: UInt.self)
                      if let address = bufferPointer.baseAddress{
                         buffer.append(address, length: size)
@@ -213,7 +209,8 @@ class TaskManager : NSObject{
                 // Write Buffer
                  if let d = buffer.copy() as? Data{
                     parse(header: d)
-                    socket.write(d, withTimeout: -1.0, tag: Tag.hTalk.rawValue)
+                    
+                 //   socket.write(d, withTimeout: -1.0, tag: val)
                  }
                  
                  
@@ -225,16 +222,18 @@ class TaskManager : NSObject{
     }
 
     
-    //  HeaderInfo
-    func parse(header data: Data) -> ( UInt){
-        var headerLength: UInt = 0
-        var tag: UInt = 0
+    func parse(header data: Data) -> HeaderInfo{
+        var big: UInt = 0
+        var small: UInt = 0
         let size = MemoryLayout<UInt>.size
-        NSData(data: data).getBytes(&headerLength, range: NSRange(location: 0, length: size))
-        NSData(data: data).getBytes(&tag, range: NSRange(location: size * 2, length: size))
-        print("我去")
-        print(tag, headerLength)
-        return headerLength
+        let meta = NSData(data: data)
+        meta.getBytes(&big, range: NSRange(location: 0, length: size))
+        meta.getBytes(&small, range: NSRange(location: size, length: size))
+        
+        print("big:", big, "\nsmall:", small)
+        
+        
+        return HeaderInfo(tag: 0, headerLength: 0)
     }
 
 
@@ -299,20 +298,17 @@ extension TaskManager: GCDAsyncSocketDelegate{
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         switch Tag(rawValue: tag) {
         case .head:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.body.rawValue)
+            let meta = parse(header: data)
+            socket.readData(toLength: meta.headerLength, withTimeout: -1.0, tag: Int(meta.tag))
         case .body:
             parse(body: data)
             socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
-        case .headStream:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bodyStream.rawValue)
         case .bodyStream:
             parse(buffer: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.headStream.rawValue)
-        case .hTalk:
-            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bTalk.rawValue)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
         case .bTalk:
             parse(talk: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.hTalk.rawValue)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
         default:
             ()
         }
@@ -331,7 +327,7 @@ extension TaskManager: GCDAsyncSocketDelegate{
     
     
     func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-        if tag == Tag.headStream.rawValue{
+        if tag == Tag.bodyStream.rawValue{
             sendFile()
         }
     }
