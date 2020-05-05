@@ -180,7 +180,7 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool) {
+    func didReceive(_ name: String?, buffer data: Data?, to theEnd: Bool) {
         
     }
     
@@ -195,9 +195,12 @@ extension ViewController: TaskManagerProxy{
     }
     
 
-    func didReceive(packet data: Data){
+    func didReceive(packet data: Data?){
+        guard let datum = data else {
+            return
+        }
         do {
-            let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
+            let dict = try PropertyListSerialization.propertyList(from: datum, format: nil) as! [String: Any]
             if let url = URL.src{
                 if FileManager.default.fileExists(atPath: url.absoluteString){
                     try FileManager.default.removeItem(atPath: url.absoluteString)
@@ -211,10 +214,13 @@ extension ViewController: TaskManagerProxy{
     }
     
     
-    func didCome(a message: String) {
+    func didCome(a message: String?) {
+        guard let word = message else {
+            return
+        }
         let alert = NSAlert()
         alert.messageText = "有消息"
-        alert.informativeText = message
+        alert.informativeText = word
         alert.addButton(withTitle: "嗯嗯")
         alert.alertStyle = .warning
         if let w = view.window{
