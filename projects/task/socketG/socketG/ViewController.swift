@@ -179,17 +179,21 @@ extension ViewController: JoinListCtrlDelegate{
 
 
 extension ViewController: TaskManagerProxy{
-    func didDisconnect(manager: TaskManager) {
+    func didReceive(_ name: String, buffer data: Data){
+        
+    }
+    
+    func didDisconnect(){
         endTask()
     }
     
 
-    func didStartNewTask(manager: TaskManager) {
+    func didStartNewTask(){
       
     }
     
 
-    func didReceive(packet data: Data, by manager: TaskManager){
+    func didReceive(packet data: Data){
         do {
             let dict = try PropertyListSerialization.propertyList(from:data, format: nil) as! [String: Any]
             if let url = URL.src{
@@ -203,6 +207,23 @@ extension ViewController: TaskManagerProxy{
         }
         
     }
+    
+    
+    func didCome(a message: String) {
+        let alert = NSAlert()
+        alert.messageText = "有消息"
+        alert.informativeText = message
+        alert.addButton(withTitle: "嗯嗯")
+        alert.alertStyle = .warning
+        if let w = view.window{
+            alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
+                if returnCode == .alertFirstButtonReturn{
+                    print("ok")
+                }
+            }
+        }
+    }
+
 }
 
 

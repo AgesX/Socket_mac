@@ -9,14 +9,13 @@
 import Foundation
 
 
+
 enum PacketType: Int{
     case `default` = -1, sendData, start
 }
 
 
-
-
-
+private
 struct PacketKey {
     static let data = "data"
     static let type = "type"

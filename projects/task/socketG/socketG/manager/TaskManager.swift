@@ -10,51 +10,23 @@ import Foundation
 
 
 protocol TaskManagerProxy: class{
-    func didReceive(packet data: Data, by manager: TaskManager)
+    func didReceive(packet data: Data)
+    func didDisconnect()
+    func didStartNewTask()
     
-    func didDisconnect(manager: TaskManager)
-    func didStartNewTask(manager: TaskManager)
+    func didCome(a message: String)
+    func didReceive(_ name: String, buffer data: Data, to theEnd: Bool)
 }
 
 
-struct Tag {
-    static let head = 0
-    static let body = 1
-    static let headStream = 2
-    static let bodyStream = 3
-}
-
-
-struct FileAdminister {
-    let handler: FileHandle?
-    let length: UInt64
-    let name: String
+enum Tag: Int{
+    case head = 0
+    case body = 1
+    case headStream = 2
     
-    var offset: UInt64
-    var tillEnd: Bool
-    
-    init(url src: URL) {
-        handler = FileHandle(forReadingAtPath: src.absoluteString)
-        var len = 0
-        if let data = NSData(contentsOfFile: src.absoluteString){
-            len = data.length
-        }
-        length = UInt64(len)
-        name = src.lastPathComponent
-        
-        offset = 0
-        tillEnd = false
-    }
-    
-    
-    mutating
-    func offsetForward(){
-        offset += 1024 * 200
-        //  一次 200 k B
-        if offset >= length{
-            tillEnd = true
-        }
-    }
+    case bodyStream = 3
+    case hTalk = 4
+    case bTalk = 5
 }
 
 
@@ -71,7 +43,7 @@ class TaskManager : NSObject{
         socket = s
         super.init()
         socket.delegate = self
-        socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head)
+        socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
     }
 
 
@@ -90,18 +62,18 @@ class TaskManager : NSObject{
     
     fileprivate
     func sendFile(){
-        let condition: Bool = fileAdmin?.tillEnd ?? true
-        guard condition == false else {
+        let toTheEnd: Bool = fileAdmin?.tillEnd ?? true
+        guard toTheEnd == false else {
             stopSendingFile()
             return
         }
         do {
             try fileAdmin?.handler?.seek(toOffset: fileAdmin?.offset ?? 0)
             fileAdmin?.offsetForward()
-            guard let bodyData = fileAdmin?.handler?.readData(ofLength: Int(fileAdmin?.offset ?? 0)) else{
+            guard let body = fileAdmin?.handler?.readData(ofLength: Int(fileAdmin?.offset ?? 0)) else{
                 return
             }
-            let packet = Package(data: bodyData, type: .sendData)
+            let packet = Buffer((fileAdmin?.name ?? String.dummy), buffer: body, to: toTheEnd)
             let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
                 
                 // Initialize Buffer
@@ -122,7 +94,7 @@ class TaskManager : NSObject{
                 
                // Write Buffer
                 if let d = buffer.copy() as? Data{
-                    socket.write(d, withTimeout: -1.0, tag: Tag.headStream)
+                    socket.write(d, withTimeout: -1.0, tag: Tag.headStream.rawValue)
                 }
             
         }catch{
@@ -139,6 +111,7 @@ class TaskManager : NSObject{
             print(error)
         }
         fileAdmin = nil
+        
     }
     
     
@@ -181,7 +154,51 @@ class TaskManager : NSObject{
 
                 // Write Buffer
                  if let d = buffer.copy() as? Data{
-                    socket.write(d, withTimeout: -1.0, tag: Tag.head)
+                    socket.write(d, withTimeout: -1.0, tag: Tag.head.rawValue)
+                 }
+                 
+                 
+             } catch {
+                 print(error)
+             }
+             
+             
+    }
+    
+    
+    
+    fileprivate
+    func send(message txt: String){
+        
+             // packet to buffer
+             // 包，到 缓冲
+               
+             // Encode Packet Data
+             let packet = Talk(word: txt)
+             do {
+            
+                 let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
+                 
+                 // Initialize Buffer
+                 let buffer = NSMutableData()
+             
+                // buffer = header + packet
+                
+                // Fill Buffer
+                 var headerLength = encoded.count
+                
+                 buffer.append(&headerLength, length: MemoryLayout<UInt64>.size)
+                 encoded.withUnsafeBytes { (p) in
+                     let bufferPointer = p.bindMemory(to: UInt8.self)
+                     if let address = bufferPointer.baseAddress{
+                         buffer.append(address, length: headerLength)
+                     }
+                 }
+                 
+
+                // Write Buffer
+                 if let d = buffer.copy() as? Data{
+                    socket.write(d, withTimeout: -1.0, tag: Tag.hTalk.rawValue)
                  }
                  
                  
@@ -193,9 +210,9 @@ class TaskManager : NSObject{
     }
 
     
-    func parse(header data: NSData) -> UInt{
+    func parse(header data: Data) -> UInt{
         var headerLength: UInt = 0
-        data.getBytes(&headerLength, length: MemoryLayout<UInt>.size)
+        NSData(data: data).getBytes(&headerLength, length: MemoryLayout<UInt>.size)
         return headerLength
     }
 
@@ -204,18 +221,14 @@ class TaskManager : NSObject{
     func parse(body data: Data){
         do {
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
-            //  NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
-             
-               print("Packet Data > \(packet.data)")
-               print("Packet Type > \(packet.type)")
          
                switch packet.type {
                     case .start:
-                        delegate?.didStartNewTask(manager: self)
+                        delegate?.didStartNewTask()
                     case .sendData:
-                        delegate?.didReceive(packet: packet.data, by: self)
+                        delegate?.didReceive(packet: packet.data)
                     default:
                         ()
                }
@@ -227,7 +240,32 @@ class TaskManager : NSObject{
     }
 
     
-
+    func parse(buffer data: Data){
+        do {
+            NSKeyedUnarchiver.setClass(Buffer.self, forClassName: "socketD.Buffer")
+            NSKeyedUnarchiver.setClass(Buffer.self, forClassName: "Buffer")
+            let buffer = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Buffer.self], from: data) as! Buffer
+            delegate?.didReceive(buffer.name, buffer: buffer.data, to: buffer.toTheEnd)
+            
+        } catch {
+            print(error)
+        }
+        
+    }
+    
+    
+    func parse(talk data: Data){
+        do {
+            NSKeyedUnarchiver.setClass(Talk.self, forClassName: "socketD.Talk")
+            NSKeyedUnarchiver.setClass(Talk.self, forClassName: "Talk")
+            let message = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Talk.self], from: data) as! Talk
+            delegate?.didCome(a: message.word)
+            
+        } catch {
+            print(error)
+        }
+        
+    }
 
     
 }
@@ -238,15 +276,23 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
- 
-        switch tag {
-        case Tag.head:
-            let d = NSData(data: data)
-            let bodyLength = parse(header: d)
-            socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: Tag.body)
-        case Tag.body:
+        switch Tag(rawValue: tag) {
+        case .head:
+            let bodyLength = parse(header: data)
+            socket.readData(toLength: bodyLength, withTimeout: -1.0, tag: Tag.body.rawValue)
+        case .body:
             parse(body: data)
-            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.head.rawValue)
+        case .headStream:
+            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bodyStream.rawValue)
+        case .bodyStream:
+            parse(buffer: data)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.headStream.rawValue)
+        case .hTalk:
+            socket.readData(toLength: parse(header: data), withTimeout: -1.0, tag: Tag.bTalk.rawValue)
+        case .bTalk:
+            parse(talk: data)
+            socket.readData(toLength: UInt(MemoryLayout<UInt64>.size), withTimeout: -1.0, tag: Tag.hTalk.rawValue)
         default:
             ()
         }
@@ -254,20 +300,18 @@ extension TaskManager: GCDAsyncSocketDelegate{
 
 
     
-    func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?) {
-
-        
+    func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: Error?){
         if socket == sock{
             socket.delegate = nil;
         }
-     
+        stopSendingFile()
         // Notify Delegate
-        delegate?.didDisconnect(manager: self)
+        delegate?.didDisconnect()
     }
     
     
     func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-        if tag == Tag.headStream{
+        if tag == Tag.headStream.rawValue{
             sendFile()
         }
     }

@@ -26,6 +26,13 @@ extension Data{
         fatalError("Data dummy")
     }()
     
+    
+    
+}
+
+
+extension String{
+    static let dummy = "嗯嗯"
 }
 
 
