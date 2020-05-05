@@ -22,6 +22,8 @@ class MusicBroswer: NSViewController {
     
     var files = [URL]()
     
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +67,7 @@ class MusicBroswer: NSViewController {
             return
         }
         let row = table.selectedRow
-        
+        delegate?.didSend(data: files[row])
         
         
         

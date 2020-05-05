@@ -23,9 +23,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var sendDataButton: NSButton!
     @IBOutlet weak var broswerBtn: NSButton!
     
-
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
           
@@ -47,12 +44,6 @@ class ViewController: NSViewController {
           disconnectBtn.isHidden = true
           broswerBtn.isHidden = true
       }
-    
-    
-    
-    
-    
-      
     
     
     // MARK: Task relevant
@@ -218,10 +209,7 @@ extension ViewController: TaskManagerProxy{
 
 extension ViewController: MusicBroswerDelegate{
     func didSend(data url: URL) {
-        
-        
-        
-        
+        taskAdmin?.send(file: url)
     }
     
     
