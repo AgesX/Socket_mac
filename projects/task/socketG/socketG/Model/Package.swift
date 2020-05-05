@@ -22,6 +22,7 @@ struct PacketKey {
     
     static let name = "name"
     static let toTheEnd = "toTheEnd"
+    static let kind = "kind"
 }
 
 
@@ -34,7 +35,7 @@ class Package: NSObject{
     
     let name: String?
     let toTheEnd: Bool
-
+    let kind: Int
 
     
     init(package info: Data, type t: PacketType){
@@ -44,6 +45,7 @@ class Package: NSObject{
         
         name = nil
         toTheEnd = false
+        kind = 1
         super.init()
     }
     
@@ -55,6 +57,7 @@ class Package: NSObject{
         
         name = nil
         toTheEnd = false
+        kind = 2
         super.init()
     }
     
@@ -65,6 +68,7 @@ class Package: NSObject{
         
         name = n
         toTheEnd = theEnd
+        kind = 3
         super.init()
     }
     
@@ -76,6 +80,7 @@ class Package: NSObject{
         
         name = coder.decodeObject(forKey: PacketKey.name) as? String
         toTheEnd = coder.decodeBool(forKey: PacketKey.toTheEnd)
+        kind = coder.decodeInteger(forKey: PacketKey.kind)
     }
     
 }
@@ -92,6 +97,7 @@ extension Package: NSCoding, NSSecureCoding{
         
         coder.encode(name, forKey: PacketKey.name)
         coder.encode(toTheEnd, forKey: PacketKey.toTheEnd)
+        coder.encode(kind, forKey: PacketKey.kind)
     }
     
     

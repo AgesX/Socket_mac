@@ -216,46 +216,27 @@ class TaskManager : NSObject{
     
     func parse(body data: Data){
         do {
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
-         
-               switch packet.type {
-                    case .start:
-                        delegate?.didStartNewTask()
-                    case .sendData:
-                        delegate?.didReceive(packet: packet.data)
-                    default:
-                        ()
-               }
             
-        } catch {
-            print(error)
-        }
-        
-    }
-
-    
-    func parse(buffer data: Data){
-        do {
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
-            let buffer = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Package.self], from: data) as! Package
-            delegate?.didReceive(buffer.name, buffer: buffer.data, to: buffer.toTheEnd)
-            
-        } catch {
-            print(error)
-        }
-        
-    }
-    
-    
-    func parse(talk data: Data){
-        do {
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
-            NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
-            let message = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [Package.self], from: data) as! Package
-            delegate?.didCome(a: message.word)
+            switch packet.kind {
+            case 1:
+                switch packet.type {
+                     case .start:
+                         delegate?.didStartNewTask()
+                     case .sendData:
+                         delegate?.didReceive(packet: packet.data)
+                     default:
+                         ()
+                }
+            case 2:
+                delegate?.didCome(a: packet.word)
+            case 3:
+                delegate?.didReceive(packet.name, buffer: packet.data, to: packet.toTheEnd)
+            default:
+                ()
+            }
             
         } catch {
             print(error)
