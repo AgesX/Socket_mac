@@ -37,3 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
 //  Read a file/URL line-by-line in Swift
+ 
+
+
+//  https://forums.swift.org/t/reading-keyboard-input-from-xcode-playgroud/4046/2

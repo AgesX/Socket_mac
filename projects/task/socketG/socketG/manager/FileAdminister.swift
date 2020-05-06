@@ -22,7 +22,8 @@ struct FileAdminister {
     
     init(url src: URL) {
         
-        handler = FileHandle(forReadingAtPath: src.absoluteString)
+        handler = FileHandle(forReadingAtPath: src.file)
+        assert(FileHandle(forReadingAtPath: src.file) != nil, "handler 初始化出错")
         var len = 0
         if let data = NSData(contentsOfFile: src.absoluteString){
             len = data.length

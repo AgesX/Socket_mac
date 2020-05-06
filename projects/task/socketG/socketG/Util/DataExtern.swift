@@ -75,3 +75,16 @@ extension NSUserInterfaceItemIdentifier{
     
     
 }
+
+
+
+
+
+extension URL{
+    var file: String{
+        absoluteString.replacingOccurrences(of: "file://", with: "")
+    }
+}
+
+
+
