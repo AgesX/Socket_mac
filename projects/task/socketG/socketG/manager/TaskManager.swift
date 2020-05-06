@@ -68,7 +68,7 @@ class TaskManager : NSObject{
         do {
             try fileAdmin?.handler?.seek(toOffset: fileAdmin?.offset ?? 0)
             fileAdmin?.offsetForward()
-            guard let body = fileAdmin?.handler?.readData(ofLength: Int(fileAdmin?.offset ?? 0)) else{
+            guard let body = fileAdmin?.handler?.readData(ofLength: fileAdmin?.stride ?? 0) else{
                 return
             }
             let packet = Package(buffer: body, name: fileAdmin?.name, to: toTheEnd)

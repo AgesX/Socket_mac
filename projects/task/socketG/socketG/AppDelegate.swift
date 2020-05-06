@@ -33,3 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
  
+//  How to read a block of data from file (instead of a whole file) in Swift
+
+
+//  Read a file/URL line-by-line in Swift

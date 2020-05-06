@@ -147,7 +147,6 @@ class ViewController: NSViewController {
         let vc = MusicBroswer(nibName: nil, bundle: nil)
         vc.delegate = self
         presentAsModalWindow(vc)
-        taskAdmin?.send(message: "传输结束")
     }
     
 }

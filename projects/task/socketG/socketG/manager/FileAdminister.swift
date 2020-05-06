@@ -18,8 +18,10 @@ struct FileAdminister {
     
     var offset: UInt64
     var tillEnd: Bool
+    let stride: Int
     
     init(url src: URL) {
+        
         handler = FileHandle(forReadingAtPath: src.absoluteString)
         var len = 0
         if let data = NSData(contentsOfFile: src.absoluteString){
@@ -30,12 +32,13 @@ struct FileAdminister {
         
         offset = 0
         tillEnd = false
+        stride = 1024 * 200
     }
     
     
     mutating
     func offsetForward(){
-        offset += 1024 * 200
+        offset += UInt64(stride)
         //  一次 200 k B
         if offset >= length{
             tillEnd = true
