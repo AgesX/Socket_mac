@@ -42,7 +42,7 @@ class ViewController: NSViewController {
           let attrStringCut = NSAttributedString(string: cut, attributes: attributeCut)
           disconnectBtn.attributedTitle = attrStringCut
           disconnectBtn.isHidden = true
-          broswerBtn.isHidden = true
+       //   broswerBtn.isHidden = true
       }
     
     
@@ -65,7 +65,7 @@ class ViewController: NSViewController {
     }
     
     
-    func endTask(){
+    func disconnectUI(){
         
         // Clean Up
         taskAdmin?.delegate = nil
@@ -77,7 +77,7 @@ class ViewController: NSViewController {
         
         joinBtn.isHidden = false
         disconnectBtn.isHidden = true
-        
+        broswerBtn.isHidden = true
     }
     
 
@@ -101,7 +101,7 @@ class ViewController: NSViewController {
     
     
     @IBAction func disconnectIt(_ sender: NSButton) {
-        endTask()
+        disconnectUI()
     }
     
     
@@ -185,7 +185,7 @@ extension ViewController: TaskManagerProxy{
     
     
     func didDisconnect(){
-        endTask()
+        disconnectUI()
     }
     
 
