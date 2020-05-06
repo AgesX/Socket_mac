@@ -60,15 +60,23 @@ class TaskManager : NSObject{
     
     fileprivate
     func sendFile(){
+        let beyond: Bool = fileAdmin?.beyond ?? true
         let toTheEnd: Bool = fileAdmin?.tillEnd ?? true
-        guard toTheEnd == false else {
+        guard beyond == false else {
             stopSendingFile()
             return
+        }
+        if toTheEnd{
+            fileAdmin?.beyond = true
         }
         do {
             try fileAdmin?.handler?.seek(toOffset: fileAdmin?.offset ?? 0)
             fileAdmin?.offsetForward()
-            guard let body = fileAdmin?.handler?.readData(ofLength: fileAdmin?.stride ?? 0) else{
+            var blockLength = fileAdmin?.stride ?? 0
+            if toTheEnd{
+                blockLength = fileAdmin?.rest ?? 0
+            }
+            guard let body = fileAdmin?.handler?.readData(ofLength: blockLength) else{
                 return
             }
             let packet = Package(buffer: body, name: fileAdmin?.name, to: toTheEnd)

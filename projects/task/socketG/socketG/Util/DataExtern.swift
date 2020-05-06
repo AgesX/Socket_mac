@@ -64,6 +64,11 @@ extension URL{
         return pathURL
     }
     
+    
+    var file: String{
+        absoluteString.replacingOccurrences(of: "file://", with: "")
+    }
+    
 }
 
 
@@ -76,15 +81,6 @@ extension NSUserInterfaceItemIdentifier{
     
 }
 
-
-
-
-
-extension URL{
-    var file: String{
-        absoluteString.replacingOccurrences(of: "file://", with: "")
-    }
-}
 
 
 
