@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		26257F45246399F000F44E51 /* MusicBroswer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26257F43246399F000F44E51 /* MusicBroswer.xib */; };
+		26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26257F44246399F000F44E51 /* MusicBroswer.swift */; };
 		264CF8142461A068002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF8132461A068002AED20 /* FileAdminister.swift */; };
 		266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2668117D2455AADD00617537 /* GCDAsyncSocket.m */; };
 		266811872455AADD00617537 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811802455AADD00617537 /* Package.swift */; };
@@ -23,8 +25,6 @@
 		267C052B2447388200BAF530 /* socketGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C052A2447388200BAF530 /* socketGUITests.swift */; };
 		269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E4F2460B26E009D3D6F /* UI_Extern.swift */; };
 		269A1E522460B26E009D3D6F /* DataExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E502460B26E009D3D6F /* DataExtern.swift */; };
-		26CC8515246052B800D50827 /* MusicBroswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CC8513246052B800D50827 /* MusicBroswer.swift */; };
-		26CC8516246052B800D50827 /* MusicBroswer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26CC8514246052B800D50827 /* MusicBroswer.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		26257F43246399F000F44E51 /* MusicBroswer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicBroswer.xib; sourceTree = "<group>"; };
+		26257F44246399F000F44E51 /* MusicBroswer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicBroswer.swift; sourceTree = "<group>"; };
 		264CF8132461A068002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
 		2668117D2455AADD00617537 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		2668117E2455AADD00617537 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -70,8 +72,6 @@
 		267C052C2447388200BAF530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		269A1E4F2460B26E009D3D6F /* UI_Extern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Extern.swift; sourceTree = "<group>"; };
 		269A1E502460B26E009D3D6F /* DataExtern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtern.swift; sourceTree = "<group>"; };
-		26CC8513246052B800D50827 /* MusicBroswer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicBroswer.swift; sourceTree = "<group>"; };
-		26CC8514246052B800D50827 /* MusicBroswer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MusicBroswer.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		26257F42246399F000F44E51 /* FileAndMusic */ = {
+			isa = PBXGroup;
+			children = (
+				26257F43246399F000F44E51 /* MusicBroswer.xib */,
+				26257F44246399F000F44E51 /* MusicBroswer.swift */,
+			);
+			path = FileAndMusic;
+			sourceTree = "<group>";
+		};
 		2668117C2455AADD00617537 /* TCP */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,12 +146,11 @@
 		2668118A2455AC5F00617537 /* Ctrls */ = {
 			isa = PBXGroup;
 			children = (
+				26257F42246399F000F44E51 /* FileAndMusic */,
 				2668118B2455AC8100617537 /* HostCtrl.swift */,
 				2668118C2455AC8100617537 /* HostCtrl.xib */,
 				2668118F2455AC9200617537 /* JoinCtrl.swift */,
 				266811902455AC9200617537 /* JoinCtrl.xib */,
-				26CC8513246052B800D50827 /* MusicBroswer.swift */,
-				26CC8514246052B800D50827 /* MusicBroswer.xib */,
 			);
 			path = Ctrls;
 			sourceTree = "<group>";
@@ -316,7 +324,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26CC8516246052B800D50827 /* MusicBroswer.xib in Resources */,
+				26257F45246399F000F44E51 /* MusicBroswer.xib in Resources */,
 				2668118E2455AC8100617537 /* HostCtrl.xib in Resources */,
 				267C05112447388100BAF530 /* Assets.xcassets in Resources */,
 				266811922455AC9200617537 /* JoinCtrl.xib in Resources */,
@@ -349,8 +357,8 @@
 				266811892455AADD00617537 /* TaskManager.swift in Sources */,
 				266811872455AADD00617537 /* Package.swift in Sources */,
 				266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */,
-				26CC8515246052B800D50827 /* MusicBroswer.swift in Sources */,
 				267C050F2447387C00BAF530 /* ViewController.swift in Sources */,
+				26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */,
 				2668118D2455AC8100617537 /* HostCtrl.swift in Sources */,
 				266811912455AC9200617537 /* JoinCtrl.swift in Sources */,
 				267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */,

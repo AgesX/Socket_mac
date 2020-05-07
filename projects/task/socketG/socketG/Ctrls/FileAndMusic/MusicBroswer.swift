@@ -41,6 +41,7 @@ class MusicBroswer: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        files.removeAll()
         if let src = URL.dir{
             do {
                 let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
