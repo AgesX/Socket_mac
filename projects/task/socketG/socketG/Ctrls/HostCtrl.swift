@@ -98,9 +98,6 @@ extension HostCtrl: GCDAsyncSocketDelegate{
     
     
     func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
-
-        
-        print("Accepted New Socket from \(sock.connectedHost): \(sock.connectedPort)")
         delegate?.didHostTask(c: self, On: newSocket)
         endBroadcast()
         dismiss()

@@ -17,6 +17,14 @@
 		2668118E2455AC8100617537 /* HostCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2668118C2455AC8100617537 /* HostCtrl.xib */; };
 		266811912455AC9200617537 /* JoinCtrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2668118F2455AC9200617537 /* JoinCtrl.swift */; };
 		266811922455AC9200617537 /* JoinCtrl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 266811902455AC9200617537 /* JoinCtrl.xib */; };
+		2669B6122465433500E3231C /* AssetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B6112465433500E3231C /* AssetCell.swift */; };
+		2669B61D24654C1100E3231C /* UICircularRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61424654C1100E3231C /* UICircularRing.swift */; };
+		2669B61E24654C1100E3231C /* UICircularRingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61524654C1100E3231C /* UICircularRingLayer.swift */; };
+		2669B61F24654C1100E3231C /* UICircularRingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61624654C1100E3231C /* UICircularRingStyle.swift */; };
+		2669B62124654C1100E3231C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61824654C1100E3231C /* Extensions.swift */; };
+		2669B62224654C1100E3231C /* UICircularProgressRingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61A24654C1100E3231C /* UICircularProgressRingDelegate.swift */; };
+		2669B62324654C1100E3231C /* UICircularProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61B24654C1100E3231C /* UICircularProgressRing.swift */; };
+		2669B62424654C1100E3231C /* UICircularRingValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2669B61C24654C1100E3231C /* UICircularRingValueFormatter.swift */; };
 		267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C050C2447387C00BAF530 /* AppDelegate.swift */; };
 		267C050F2447387C00BAF530 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C050E2447387C00BAF530 /* ViewController.swift */; };
 		267C05112447388100BAF530 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 267C05102447388100BAF530 /* Assets.xcassets */; };
@@ -57,6 +65,15 @@
 		2668118C2455AC8100617537 /* HostCtrl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HostCtrl.xib; sourceTree = "<group>"; };
 		2668118F2455AC9200617537 /* JoinCtrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCtrl.swift; sourceTree = "<group>"; };
 		266811902455AC9200617537 /* JoinCtrl.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinCtrl.xib; sourceTree = "<group>"; };
+		2669B6112465433500E3231C /* AssetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCell.swift; sourceTree = "<group>"; };
+		2669B61424654C1100E3231C /* UICircularRing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRing.swift; sourceTree = "<group>"; };
+		2669B61524654C1100E3231C /* UICircularRingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingLayer.swift; sourceTree = "<group>"; };
+		2669B61624654C1100E3231C /* UICircularRingStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingStyle.swift; sourceTree = "<group>"; };
+		2669B61824654C1100E3231C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		2669B61924654C1100E3231C /* UICircularProgressRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICircularProgressRing.h; sourceTree = "<group>"; };
+		2669B61A24654C1100E3231C /* UICircularProgressRingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingDelegate.swift; sourceTree = "<group>"; };
+		2669B61B24654C1100E3231C /* UICircularProgressRing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRing.swift; sourceTree = "<group>"; };
+		2669B61C24654C1100E3231C /* UICircularRingValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingValueFormatter.swift; sourceTree = "<group>"; };
 		267C05092447387C00BAF530 /* socketG.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = socketG.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		267C050C2447387C00BAF530 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		267C050E2447387C00BAF530 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +119,8 @@
 		26257F42246399F000F44E51 /* FileAndMusic */ = {
 			isa = PBXGroup;
 			children = (
+				2669B61324654C1100E3231C /* Ring */,
+				2669B610246542FC00E3231C /* View */,
 				26257F43246399F000F44E51 /* MusicBroswer.xib */,
 				26257F44246399F000F44E51 /* MusicBroswer.swift */,
 			);
@@ -160,6 +179,29 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2669B610246542FC00E3231C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2669B6112465433500E3231C /* AssetCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2669B61324654C1100E3231C /* Ring */ = {
+			isa = PBXGroup;
+			children = (
+				2669B61424654C1100E3231C /* UICircularRing.swift */,
+				2669B61524654C1100E3231C /* UICircularRingLayer.swift */,
+				2669B61624654C1100E3231C /* UICircularRingStyle.swift */,
+				2669B61824654C1100E3231C /* Extensions.swift */,
+				2669B61924654C1100E3231C /* UICircularProgressRing.h */,
+				2669B61A24654C1100E3231C /* UICircularProgressRingDelegate.swift */,
+				2669B61B24654C1100E3231C /* UICircularProgressRing.swift */,
+				2669B61C24654C1100E3231C /* UICircularRingValueFormatter.swift */,
+			);
+			path = Ring;
 			sourceTree = "<group>";
 		};
 		267C05002447387C00BAF530 = {
@@ -358,10 +400,18 @@
 				266811872455AADD00617537 /* Package.swift in Sources */,
 				266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */,
 				267C050F2447387C00BAF530 /* ViewController.swift in Sources */,
+				2669B61D24654C1100E3231C /* UICircularRing.swift in Sources */,
 				26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */,
+				2669B6122465433500E3231C /* AssetCell.swift in Sources */,
+				2669B61F24654C1100E3231C /* UICircularRingStyle.swift in Sources */,
+				2669B62324654C1100E3231C /* UICircularProgressRing.swift in Sources */,
+				2669B62224654C1100E3231C /* UICircularProgressRingDelegate.swift in Sources */,
+				2669B61E24654C1100E3231C /* UICircularRingLayer.swift in Sources */,
 				2668118D2455AC8100617537 /* HostCtrl.swift in Sources */,
 				266811912455AC9200617537 /* JoinCtrl.swift in Sources */,
 				267C050D2447387C00BAF530 /* AppDelegate.swift in Sources */,
+				2669B62124654C1100E3231C /* Extensions.swift in Sources */,
+				2669B62424654C1100E3231C /* UICircularRingValueFormatter.swift in Sources */,
 				269A1E522460B26E009D3D6F /* DataExtern.swift in Sources */,
 				264CF8142461A068002AED20 /* FileAdminister.swift in Sources */,
 			);
