@@ -70,7 +70,6 @@
 		2669B61524654C1100E3231C /* UICircularRingLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingLayer.swift; sourceTree = "<group>"; };
 		2669B61624654C1100E3231C /* UICircularRingStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingStyle.swift; sourceTree = "<group>"; };
 		2669B61824654C1100E3231C /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		2669B61924654C1100E3231C /* UICircularProgressRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICircularProgressRing.h; sourceTree = "<group>"; };
 		2669B61A24654C1100E3231C /* UICircularProgressRingDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRingDelegate.swift; sourceTree = "<group>"; };
 		2669B61B24654C1100E3231C /* UICircularProgressRing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularProgressRing.swift; sourceTree = "<group>"; };
 		2669B61C24654C1100E3231C /* UICircularRingValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICircularRingValueFormatter.swift; sourceTree = "<group>"; };
@@ -196,7 +195,6 @@
 				2669B61524654C1100E3231C /* UICircularRingLayer.swift */,
 				2669B61624654C1100E3231C /* UICircularRingStyle.swift */,
 				2669B61824654C1100E3231C /* Extensions.swift */,
-				2669B61924654C1100E3231C /* UICircularProgressRing.h */,
 				2669B61A24654C1100E3231C /* UICircularProgressRingDelegate.swift */,
 				2669B61B24654C1100E3231C /* UICircularProgressRing.swift */,
 				2669B61C24654C1100E3231C /* UICircularRingValueFormatter.swift */,

@@ -46,6 +46,9 @@ struct FileAdminister {
     mutating
     func offsetForward(){
         offset += UInt64(stride)
+        print("进度:")
+        print(Double(offset)/Double(length))
+        print("\n\n")
         //  一次 200 k B
         if offset >= length{
             tillEnd = true
