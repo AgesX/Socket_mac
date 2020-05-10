@@ -25,12 +25,12 @@ struct FileAdminister {
     
     init(url src: URL) {
         
-        handler = FileHandle(forReadingAtPath: src.file)
-        print(src.file)
-        assert(FileHandle(forReadingAtPath: src.file) != nil, "handler 初始化出错")
+        handler = FileHandle(forReadingAtPath: src.path)
+        print(src.path)
+        assert(FileHandle(forReadingAtPath: src.path) != nil, "handler 初始化出错")
         
         var len = 0
-        if let data = NSData(contentsOfFile: src.file){
+        if let data = NSData(contentsOfFile: src.path){
             len = data.length
         }
         length = UInt64(len)

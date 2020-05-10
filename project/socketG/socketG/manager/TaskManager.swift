@@ -225,6 +225,7 @@ class TaskManager : NSObject{
     func parse(body data: Data){
         do {
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketG.Package")
+            NSKeyedUnarchiver.setClass(Package.self, forClassName: "socketD.Package")
             NSKeyedUnarchiver.setClass(Package.self, forClassName: "Package")
             let packet = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSDictionary.self, Package.self], from: data) as! Package
             

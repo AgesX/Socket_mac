@@ -64,11 +64,7 @@ extension URL{
         return pathURL
     }
     
-    
-    var file: String{
-        let raw = absoluteString.replacingOccurrences(of: "file://", with: "")
-        return raw.removingPercentEncoding ?? raw
-    }
+ 
     
 }
 
