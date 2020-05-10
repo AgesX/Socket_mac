@@ -5,7 +5,7 @@ Socket mac 端，基于 GCDAsyncSocket
 
 博客地址和使用指南： [努力形象、简单的学习 socket 上古魔法，的开发](https://juejin.im/post/5eb84e3bf265da7bb46bd7df)
 
-[他兄弟，对应的 iOS app](https://github.com/AgesX/Socket_mac)
+[他兄弟，对应的 iOS app](https://github.com/AgesX/Socket_iOS)
 
 
 <hr>
