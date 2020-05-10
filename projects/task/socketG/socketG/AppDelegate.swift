@@ -41,3 +41,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
 //  https://forums.swift.org/t/reading-keyboard-input-from-xcode-playgroud/4046/2
+
+
+
+
+// 可用，ASCii to utf8， 不如去除 URL 的 % 编码
