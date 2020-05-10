@@ -31,10 +31,11 @@ class MusicBroswer: NSViewController {
         
         
         title = "本地指定文件夹，音乐浏览"
-
+        view.frame = NSRect(x: 0, y: 0, width: 500, height: 400)
         table.delegate = self
         table.dataSource = self
         NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow(_:)), name: NSTableView.selectionDidChangeNotification, object: table)
+        
         
     }
     
@@ -110,12 +111,12 @@ extension MusicBroswer: NSTableViewDataSource{
 extension MusicBroswer: NSTableViewDelegate{
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
        
-
-        let cell = tableView.makeView(withIdentifier: .contentFile, owner: self) as! NSTableCellView
+        let cell = NSTextField()
+        //  let cell = tableView.makeView(withIdentifier: .contentFile, owner: self) as! NSTableCellView
         let attribute = [NSAttributedString.Key.foregroundColor: NSColor.red, NSAttributedString.Key.font: NSFont.systemFont(ofSize: 25)]
         let attrString = NSAttributedString(string: files[row].lastPathComponent, attributes: attribute)
-        
-        cell.textField?.attributedStringValue = attrString
+        cell.attributedStringValue = attrString
+        //  cell.textField?.attributedStringValue = attrString
         return cell
     }
     

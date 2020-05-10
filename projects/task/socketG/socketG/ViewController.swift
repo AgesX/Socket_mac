@@ -26,7 +26,6 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
           
-          
           // Configure Subviews
           let sendData = "send data"
           let attribute = [NSAttributedString.Key.foregroundColor: NSColor.blue]
@@ -43,6 +42,19 @@ class ViewController: NSViewController {
           disconnectBtn.attributedTitle = attrStringCut
           disconnectBtn.isHidden = true
        //   broswerBtn.isHidden = true
+        var str : String = "哈哈123abc"
+
+        //String to Unicode
+        var dataenc = str.data(using: String.Encoding.nonLossyASCII)
+        var encodevalue = String(data: dataenc!, encoding: String.Encoding.utf8)
+        
+        print(encodevalue)
+        
+        //Unicode to String
+        var datadec  = encodevalue?.data(using: String.Encoding.utf8)
+        var decodevalue = String(data: datadec!, encoding: String.Encoding.nonLossyASCII)
+        
+        print(decodevalue)
       }
     
     

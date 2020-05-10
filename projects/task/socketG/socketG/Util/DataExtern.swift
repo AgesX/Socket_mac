@@ -66,7 +66,19 @@ extension URL{
     
     
     var file: String{
-        absoluteString.replacingOccurrences(of: "file://", with: "")
+        let raw = absoluteString.replacingOccurrences(of: "file://", with: "")
+        // ascii to utf8
+//        if let bytes = raw.data(using: .utf8), let chinese = String(data: bytes, encoding: .utf8){
+//            print("chinese: " , chinese)
+//            return chinese
+//        }
+        if let datadec = raw.data(using: String.Encoding.utf8), let decodevalue = String(data: datadec, encoding: String.Encoding.nonLossyASCII){
+            print("chinese: " ,decodevalue)
+            return decodevalue
+        }
+        
+        
+        return raw
     }
     
 }
