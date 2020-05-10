@@ -69,6 +69,7 @@ class MusicBroswer: NSViewController {
             return
         }
         let row = table.selectedRow
+        assert(row >= 0, "不能选个负数")
         delegate?.didSend(data: files[row])
         
         
@@ -112,6 +113,7 @@ extension MusicBroswer: NSTableViewDelegate{
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
        
         let cell = NSTextField()
+        cell.isEditable = false
         //  let cell = tableView.makeView(withIdentifier: .contentFile, owner: self) as! NSTableCellView
         let attribute = [NSAttributedString.Key.foregroundColor: NSColor.red, NSAttributedString.Key.font: NSFont.systemFont(ofSize: 25)]
         let attrString = NSAttributedString(string: files[row].lastPathComponent, attributes: attribute)

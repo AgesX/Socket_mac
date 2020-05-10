@@ -112,17 +112,10 @@ extension JoinCtrl: NetServiceDelegate, NetServiceBrowserDelegate{
             return false
         }
         
-        var condition = false
-        
-        if let ss = socket{
-            if ss.isConnected == false{
-                condition = true
-            }
-            else{
-                isConnected = ss.isConnected
-            }
+        if let ss = socket, ss.isConnected{
+            isConnected = true
         }
-        if socket == nil || condition{
+        if isConnected == false{
             
             // Initialize Socket
             

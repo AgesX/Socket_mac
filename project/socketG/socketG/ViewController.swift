@@ -41,7 +41,7 @@ class ViewController: NSViewController {
           let attrStringCut = NSAttributedString(string: cut, attributes: attributeCut)
           disconnectBtn.attributedTitle = attrStringCut
           disconnectBtn.isHidden = true
-       //   broswerBtn.isHidden = true
+          broswerBtn.isHidden = true
  
       }
     
