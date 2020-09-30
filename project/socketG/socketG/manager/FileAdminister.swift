@@ -22,8 +22,8 @@ struct FileAdminister {
     let stride: Int
     
     var rest: Int
+    var dir: String
     
-    static var pNode: String?
     
     init(url src: URL) {
         
@@ -44,6 +44,7 @@ struct FileAdminister {
         stride = 1024 * 200
         
         rest = 0
+        dir = src.dir
     }
     
     

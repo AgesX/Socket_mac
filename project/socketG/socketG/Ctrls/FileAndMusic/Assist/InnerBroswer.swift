@@ -46,7 +46,7 @@ class InnerBroswer: NSViewController {
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
                 for url in paths{
                     let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
-                    let musicExtern = ["mp3", "m4a"]
+                    let musicExtern = SoundSrc.kinds
                     if isDirectory{
                         ()
                     } else if musicExtern.contains(url.pathExtension){

@@ -36,6 +36,8 @@
 		267C052B2447388200BAF530 /* socketGUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267C052A2447388200BAF530 /* socketGUITests.swift */; };
 		269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E4F2460B26E009D3D6F /* UI_Extern.swift */; };
 		269A1E522460B26E009D3D6F /* DataExtern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A1E502460B26E009D3D6F /* DataExtern.swift */; };
+		26F23A732524EF3400619D8F /* StringAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A722524EF3400619D8F /* StringAdd.swift */; };
+		26F23A7B2524F4AE00619D8F /* URL_add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F23A7A2524F4AE00619D8F /* URL_add.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,8 @@
 		267C052C2447388200BAF530 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		269A1E4F2460B26E009D3D6F /* UI_Extern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UI_Extern.swift; sourceTree = "<group>"; };
 		269A1E502460B26E009D3D6F /* DataExtern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtern.swift; sourceTree = "<group>"; };
+		26F23A722524EF3400619D8F /* StringAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringAdd.swift; sourceTree = "<group>"; };
+		26F23A7A2524F4AE00619D8F /* URL_add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL_add.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +168,8 @@
 			children = (
 				269A1E502460B26E009D3D6F /* DataExtern.swift */,
 				269A1E4F2460B26E009D3D6F /* UI_Extern.swift */,
+				26F23A722524EF3400619D8F /* StringAdd.swift */,
+				26F23A7A2524F4AE00619D8F /* URL_add.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26F23A7B2524F4AE00619D8F /* URL_add.swift in Sources */,
 				269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */,
 				266811892455AADD00617537 /* TaskManager.swift in Sources */,
 				266811872455AADD00617537 /* Package.swift in Sources */,
@@ -419,6 +426,7 @@
 				2669B61D24654C1100E3231C /* UICircularRing.swift in Sources */,
 				26622B7225246789000DAD27 /* TaskManagerAdd.swift in Sources */,
 				26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */,
+				26F23A732524EF3400619D8F /* StringAdd.swift in Sources */,
 				2669B6122465433500E3231C /* AssetCell.swift in Sources */,
 				2669B61F24654C1100E3231C /* UICircularRingStyle.swift in Sources */,
 				2669B62324654C1100E3231C /* UICircularProgressRing.swift in Sources */,

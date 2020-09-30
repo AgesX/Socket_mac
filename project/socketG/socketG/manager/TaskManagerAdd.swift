@@ -9,21 +9,25 @@
 import Cocoa
 import Foundation
 
+struct SoundSrc {
+    static let kinds = ["mp3", "m4a", "txt", "wav"]
+}
+
+
+
 
 extension TaskManager{
     
     
     func send(folder url: URL){
-        FileAdminister.pNode = url.lastPathComponent
         do {
             let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
             let paths = try FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])
             for url in paths{
                 let isDirectory = (try url.resourceValues(forKeys: [.isDirectoryKey])).isDirectory ?? false
-                let musicExtern = ["mp3", "m4a"]
                 if isDirectory{
                     ()
-                } else if musicExtern.contains(url.pathExtension){
+                } else if SoundSrc.kinds.contains(url.pathExtension){
                     sources.append(url)
                 }
             }
@@ -60,7 +64,7 @@ extension TaskManager{
             guard let body = fileAdmin?.handler?.readData(ofLength: blockLength) else{
                 return
             }
-            let packet = Package(buffer: body, name: fileAdmin?.name, pNode: FileAdminister.pNode, to: toTheEnd)
+            let packet = Package(buffer: body, name: fileAdmin?.name, pNode: fileAdmin?.dir, to: toTheEnd)
             let encoded = try NSKeyedArchiver.archivedData(withRootObject: packet, requiringSecureCoding: false)
                 
             // Initialize Buffer
