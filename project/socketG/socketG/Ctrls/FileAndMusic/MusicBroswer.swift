@@ -110,24 +110,6 @@ class MusicBroswer: NSViewController {
             presentAsModalWindow(vc)
         }
         
-        
-        
-        
-        
-        ///
-        let alert = NSAlert()
-        alert.messageText = "选中即发送"
-        alert.informativeText = "发送啦"
-        alert.addButton(withTitle: "嗯嗯")
-        alert.alertStyle = .warning
-        if let w = view.window{
-            alert.beginSheetModal(for: w) { (returnCode: NSApplication.ModalResponse) in
-                if returnCode == .alertFirstButtonReturn{
-                    print("ok")
-                }
-            }
-        }
-        
     }
     
     
