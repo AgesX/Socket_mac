@@ -13,7 +13,6 @@
 		26622B7225246789000DAD27 /* TaskManagerAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26622B7125246789000DAD27 /* TaskManagerAdd.swift */; };
 		26622B7625246D19000DAD27 /* InnerBroswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26622B7425246D19000DAD27 /* InnerBroswer.swift */; };
 		26622B7725246D19000DAD27 /* InnerBroswer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26622B7525246D19000DAD27 /* InnerBroswer.xib */; };
-		26622B7B25247B3D000DAD27 /* SchedulerT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26622B7A25247B3D000DAD27 /* SchedulerT.swift */; };
 		266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2668117D2455AADD00617537 /* GCDAsyncSocket.m */; };
 		266811872455AADD00617537 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811802455AADD00617537 /* Package.swift */; };
 		266811892455AADD00617537 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811842455AADD00617537 /* TaskManager.swift */; };
@@ -63,7 +62,6 @@
 		26622B7125246789000DAD27 /* TaskManagerAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerAdd.swift; sourceTree = "<group>"; };
 		26622B7425246D19000DAD27 /* InnerBroswer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InnerBroswer.swift; sourceTree = "<group>"; };
 		26622B7525246D19000DAD27 /* InnerBroswer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InnerBroswer.xib; sourceTree = "<group>"; };
-		26622B7A25247B3D000DAD27 /* SchedulerT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulerT.swift; sourceTree = "<group>"; };
 		2668117D2455AADD00617537 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		2668117E2455AADD00617537 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		266811802455AADD00617537 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 			isa = PBXGroup;
 			children = (
 				266811802455AADD00617537 /* Package.swift */,
-				26622B7A25247B3D000DAD27 /* SchedulerT.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -414,7 +411,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26622B7B25247B3D000DAD27 /* SchedulerT.swift in Sources */,
 				269A1E512460B26E009D3D6F /* UI_Extern.swift in Sources */,
 				266811892455AADD00617537 /* TaskManager.swift in Sources */,
 				266811872455AADD00617537 /* Package.swift in Sources */,

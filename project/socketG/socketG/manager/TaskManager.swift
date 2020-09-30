@@ -39,9 +39,11 @@ class TaskManager : NSObject{
     var socket: GCDAsyncSocket
     
     var fileAdmin: FileAdminister?
+
     
+    var sources = [URL]()
     
-    lazy var taskScheduler = SchedulerT()
+    var toDoNext = true
     
 
     init(socket s: GCDAsyncSocket){
@@ -125,7 +127,7 @@ class TaskManager : NSObject{
             print(error)
         }
         fileAdmin = nil
-        taskScheduler.toDoNext = true
+        toDoNext = true
     }
     
     

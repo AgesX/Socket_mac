@@ -57,7 +57,7 @@ class MusicBroswer: NSViewController {
         
         
         
-        NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow), name: NSTableView.selectionDidChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow(tb:)), name: NSTableView.selectionDidChangeNotification, object: table)
         
         
     }
@@ -89,7 +89,13 @@ class MusicBroswer: NSViewController {
     
     
     @objc
-    func didSelectRow(){
+    func didSelectRow(tb map: NSNotification){
+        
+        guard let tableV = map.object as? NSTableView, table == tableV else{
+            return
+        }
+        
+        
         guard let row = info[SourceOption.row] as? Int, let kind = info[SourceOption.kind] as? SourceOption else {
             return
         }

@@ -24,36 +24,19 @@ extension TaskManager{
                 if isDirectory{
                     ()
                 } else if musicExtern.contains(url.pathExtension){
-                    taskScheduler.sources.append(url)
+                    sources.append(url)
                 }
             }
         } catch let error{
             print("error: \(error.localizedDescription)")
         }
 
-        taskScheduler.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(loopTask), userInfo: nil, repeats: true)
-        taskScheduler.timer?.fire()
-    }
-    
-    
-    
-    @objc
-    func loopTask(){
-        if taskScheduler.sources.isEmpty{
-            taskScheduler.timer?.invalidate()
-            taskScheduler.timer = nil
-            taskScheduler.toDoNext = true
-        }
-        else if taskScheduler.toDoNext{
-            taskScheduler.toDoNext = false
-            let url = taskScheduler.sources.removeFirst()
-            fileAdmin = FileAdminister(url: url)
-            sendInFolder()
-            
-        }
-        
         
     }
+    
+    
+    
+    
     
     
     
