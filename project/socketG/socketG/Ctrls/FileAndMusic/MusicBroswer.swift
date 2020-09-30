@@ -11,6 +11,9 @@ import Cocoa
 
 protocol MusicBroswerDelegate: class{
     func didSend(data url: URL)
+    
+    
+    func didSend(folder url: URL)
 }
 
 
@@ -95,6 +98,7 @@ class MusicBroswer: NSViewController {
         case .file:
             delegate?.didSend(data: files[row])
         case .folder:
+            delegate?.didSend(folder: folders[row])
             let vc = InnerBroswer(nibName: nil, bundle: nil)
             vc.source = folders[row]
             presentAsModalWindow(vc)

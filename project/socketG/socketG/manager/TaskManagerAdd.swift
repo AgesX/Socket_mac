@@ -13,7 +13,13 @@ import Foundation
 extension TaskManager{
     
     
-    
+    func send(folder url: URL){
+        send(message: url.lastPathComponent)
+        
+        
+//        fileAdmin = FileAdminister(url: url)
+//        sendFile()
+    }
     
     
     

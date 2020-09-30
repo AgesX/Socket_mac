@@ -73,6 +73,32 @@ class Package: NSObject{
     }
     
     
+    
+    init(buffer info: Data, name n: String?, pNode p: String?, to theEnd: Bool){
+        data = info
+        type = PacketType.sendData
+        
+        word = p // 记录父子绑定关系
+        
+        name = n
+        toTheEnd = theEnd
+        kind = 4
+        super.init()
+    }
+    
+    
+    init(folder info: String){
+        data = nil
+        type = PacketType.sendData
+        word = info
+        
+        name = nil
+        toTheEnd = false
+        kind = 5
+        super.init()
+    }
+    
+    
     required init?(coder: NSCoder) {
         data = coder.decodeObject(forKey: PacketKey.data) as? Data
         type = PacketType(rawValue: coder.decodeInteger(forKey: PacketKey.type)) ?? PacketType.default

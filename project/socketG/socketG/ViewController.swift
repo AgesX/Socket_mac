@@ -241,4 +241,9 @@ extension ViewController: MusicBroswerDelegate{
     }
     
     
+    
+    func didSend(folder url: URL){
+        
+        taskAdmin?.send(folder: url)
+    }
 }
