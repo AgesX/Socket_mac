@@ -35,7 +35,11 @@ class TaskManager : NSObject{
 
     var socket: GCDAsyncSocket
     
-    private var fileAdmin: FileAdminister?
+    var fileAdmin: FileAdminister?
+    
+    
+    lazy var taskScheduler = SchedulerT()
+    
 
     init(socket s: GCDAsyncSocket){
         socket = s
@@ -58,7 +62,7 @@ class TaskManager : NSObject{
     
     
     
-    fileprivate
+    
     func sendFile(){
         let beyond: Bool = fileAdmin?.beyond ?? true
         let toTheEnd: Bool = fileAdmin?.tillEnd ?? true
@@ -109,7 +113,8 @@ class TaskManager : NSObject{
            
     }
     
-    fileprivate
+
+    
     func stopSendingFile(){
         do {
             try fileAdmin?.handler?.close()
@@ -117,7 +122,7 @@ class TaskManager : NSObject{
             print(error)
         }
         fileAdmin = nil
-        
+        taskScheduler.toDoNext = true
     }
     
     

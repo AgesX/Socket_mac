@@ -26,7 +26,7 @@ class InnerBroswer: NSViewController {
         // Do view setup here.
         
         
-        title = "本地指定文件夹，音乐浏览"
+        
         view.frame = NSRect(x: 0, y: 0, width: 500, height: 400)
         table.delegate = self
         table.dataSource = self
@@ -40,6 +40,7 @@ class InnerBroswer: NSViewController {
         super.viewWillAppear()
         files.removeAll()
         if let src = source{
+            title = src.lastPathComponent
             do {
                 let properties: [URLResourceKey] = [ URLResourceKey.localizedNameKey, URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
                 let paths = try FileManager.default.contentsOfDirectory(at: src, includingPropertiesForKeys: properties, options: [FileManager.DirectoryEnumerationOptions.skipsHiddenFiles])

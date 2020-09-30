@@ -23,6 +23,8 @@ struct FileAdminister {
     
     var rest: Int
     
+    static var pNode: String?
+    
     init(url src: URL) {
         
         handler = FileHandle(forReadingAtPath: src.path)
