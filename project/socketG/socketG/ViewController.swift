@@ -24,12 +24,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var broswerBtn: NSButton!
     
     
-    
-    var timer: Timer?
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
           
@@ -50,16 +44,6 @@ class ViewController: NSViewController {
           disconnectBtn.isHidden = true
           broswerBtn.isHidden = true
  
-        
-        
-        
-          timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (t) in
-             self.loopTask()
-          })
-          if timer != nil{
-              RunLoop.main.add(timer!, forMode: .common)
-          }
-          
       }
     
     
@@ -266,24 +250,5 @@ extension ViewController: MusicBroswerDelegate{
     
     
 
-    func loopTask(){
-        print(11111)
-        guard let manager = taskAdmin else {
-            return
-        }
-        print(manager.sources)
-        if manager.sources.isEmpty{
-            manager.toDoNext = true
-            print(222)
-        }
-        else if manager.toDoNext{
-            manager.toDoNext = false
-            let url = manager.sources.removeFirst()
-            manager.fileAdmin = FileAdminister(url: url)
-            manager.sendInFolder()
-            print(333)
-        }
-        
-        
-    }
+    
 }

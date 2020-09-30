@@ -44,7 +44,7 @@ class TaskManager : NSObject{
     var sources = [URL]()
     
     var toDoNext = true
-    
+    var timer: Timer?
 
     init(socket s: GCDAsyncSocket){
         socket = s

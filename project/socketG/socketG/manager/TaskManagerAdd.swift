@@ -34,13 +34,39 @@ extension TaskManager{
         } catch let error{
             print("error: \(error.localizedDescription)")
         }
-
+        
+        if timer == nil{
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (t) in
+               self.loopTask()
+            })
+            if timer != nil{
+                RunLoop.main.add(timer!, forMode: .common)
+            }
+        }
         
     }
     
     
     
-    
+    func loopTask(){
+        print(11111)
+        print(sources)
+        if sources.isEmpty{
+            toDoNext = true
+            print(222)
+            timer?.invalidate()
+            timer = nil
+        }
+        else if toDoNext{
+            toDoNext = false
+            let url = sources.removeFirst()
+            fileAdmin = FileAdminister(url: url)
+            sendInFolder()
+            print(333)
+        }
+        
+        
+    }
     
     
     
