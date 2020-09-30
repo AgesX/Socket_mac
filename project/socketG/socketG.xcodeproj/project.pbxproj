@@ -10,6 +10,7 @@
 		26257F45246399F000F44E51 /* MusicBroswer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 26257F43246399F000F44E51 /* MusicBroswer.xib */; };
 		26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26257F44246399F000F44E51 /* MusicBroswer.swift */; };
 		264CF8142461A068002AED20 /* FileAdminister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264CF8132461A068002AED20 /* FileAdminister.swift */; };
+		26622B7225246789000DAD27 /* TaskManagerAdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26622B7125246789000DAD27 /* TaskManagerAdd.swift */; };
 		266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 2668117D2455AADD00617537 /* GCDAsyncSocket.m */; };
 		266811872455AADD00617537 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811802455AADD00617537 /* Package.swift */; };
 		266811892455AADD00617537 /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266811842455AADD00617537 /* TaskManager.swift */; };
@@ -56,6 +57,7 @@
 		26257F43246399F000F44E51 /* MusicBroswer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicBroswer.xib; sourceTree = "<group>"; };
 		26257F44246399F000F44E51 /* MusicBroswer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicBroswer.swift; sourceTree = "<group>"; };
 		264CF8132461A068002AED20 /* FileAdminister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAdminister.swift; sourceTree = "<group>"; };
+		26622B7125246789000DAD27 /* TaskManagerAdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerAdd.swift; sourceTree = "<group>"; };
 		2668117D2455AADD00617537 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		2668117E2455AADD00617537 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		266811802455AADD00617537 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -155,8 +157,9 @@
 		266811832455AADD00617537 /* manager */ = {
 			isa = PBXGroup;
 			children = (
-				266811842455AADD00617537 /* TaskManager.swift */,
 				264CF8132461A068002AED20 /* FileAdminister.swift */,
+				266811842455AADD00617537 /* TaskManager.swift */,
+				26622B7125246789000DAD27 /* TaskManagerAdd.swift */,
 			);
 			path = manager;
 			sourceTree = "<group>";
@@ -323,7 +326,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1170;
 				ORGANIZATIONNAME = "Jz D";
 				TargetAttributes = {
 					267C05082447387C00BAF530 = {
@@ -399,6 +402,7 @@
 				266811862455AADD00617537 /* GCDAsyncSocket.m in Sources */,
 				267C050F2447387C00BAF530 /* ViewController.swift in Sources */,
 				2669B61D24654C1100E3231C /* UICircularRing.swift in Sources */,
+				26622B7225246789000DAD27 /* TaskManagerAdd.swift in Sources */,
 				26257F46246399F000F44E51 /* MusicBroswer.swift in Sources */,
 				2669B6122465433500E3231C /* AssetCell.swift in Sources */,
 				2669B61F24654C1100E3231C /* UICircularRingStyle.swift in Sources */,
@@ -576,6 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = socketG/socketG.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = D878P8TW6L;
@@ -597,6 +602,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = socketG/socketG.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = D878P8TW6L;
