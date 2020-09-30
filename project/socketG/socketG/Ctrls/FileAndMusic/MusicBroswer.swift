@@ -31,7 +31,16 @@ class MusicBroswer: NSViewController {
     var files = [URL]()
     var folders = [URL]()
     
-    
+    var info: [String : Any]{
+        var row = table.selectedRow
+        var kind = SourceOption.folder
+        if row >= folders.count{
+            row -= folders.count
+            kind = .file
+        }
+        
+        return [SourceOption.row: row, SourceOption.kind: kind]
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,16 +51,10 @@ class MusicBroswer: NSViewController {
         view.frame = NSRect(x: 0, y: 0, width: 500, height: 400)
         table.delegate = self
         table.dataSource = self
-        var row = table.selectedRow
-        var kind = SourceOption.file
-        if row >= folders.count{
-            row -= folders.count
-            kind = .file
-        }
         
-        let info: [String : Any] = [SourceOption.row: row,
-                                    SourceOption.kind: kind]
-        NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow(_:)), name: NSTableView.selectionDidChangeNotification, object: info)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(MusicBroswer.didSelectRow), name: NSTableView.selectionDidChangeNotification, object: nil)
         
         
     }
@@ -83,8 +86,8 @@ class MusicBroswer: NSViewController {
     
     
     @objc
-    func didSelectRow(_ noti: Notification){
-        guard let table = noti.object as? [String : Any], let row = table[SourceOption.row] as? Int, let kind = table[SourceOption.kind] as? SourceOption else {
+    func didSelectRow(){
+        guard let row = info[SourceOption.row] as? Int, let kind = info[SourceOption.kind] as? SourceOption else {
             return
         }
         assert(row >= 0, "不能选个负数")
@@ -92,7 +95,9 @@ class MusicBroswer: NSViewController {
         case .file:
             delegate?.didSend(data: files[row])
         case .folder:
-            ()
+            let vc = InnerBroswer(nibName: nil, bundle: nil)
+            vc.source = folders[row]
+            presentAsModalWindow(vc)
         }
         
         
