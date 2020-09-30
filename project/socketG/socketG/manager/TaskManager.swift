@@ -24,6 +24,9 @@ enum Tag: Int{
     case file = 1
     case buffer = 2
     case word = 3
+    
+    
+    case folder = 4
 }
 
 
@@ -292,8 +295,15 @@ extension TaskManager: GCDAsyncSocketDelegate{
     
     
     func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-        if tag == Tag.buffer.rawValue{
-            sendFile()
+        if let kind = Tag(rawValue: tag){
+            switch kind {
+            case .buffer:
+                sendFile()
+            case .folder:
+                sendInFolder()
+            default:
+                ()
+            }
         }
     }
     

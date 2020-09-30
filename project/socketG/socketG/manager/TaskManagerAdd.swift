@@ -98,7 +98,7 @@ extension TaskManager{
             
            // Write Buffer
             if let d = buffer.copy() as? Data{
-                socket.write(d, withTimeout: -1.0, tag: Tag.buffer.rawValue)
+                socket.write(d, withTimeout: -1.0, tag: Tag.folder.rawValue)
             }
             
         }catch{
